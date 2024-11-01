@@ -2,8 +2,9 @@ from abc import ABC
 
 
 class EmpiricalDelivery(ABC):
+
     def make_chunking(self, source, chunk_size="16:64:256"):
         pass
 
-    def deliver(self):
+    def deliver(self, local_cache_store, output):
         pass

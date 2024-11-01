@@ -50,5 +50,22 @@ class Desync(EmpiricalDelivery):
             ]
         )
 
-    def deliver(self):
-        pass
+    def deliver(self, local_cache_store, output):
+        untar_index_flag = []
+        command = "extract"
+        if self._index_store.endswith(".caidx"):
+            command = "untar"
+            untar_index_flag = ["-i", "--no-same-owner"]
+        run(
+            [
+                "desync",
+                command,
+                "-s",
+                self._cache_store,
+                "-c",
+                local_cache_store,
+                self._index_store,
+                output,
+            ]
+            + untar_index_flag
+        )

@@ -31,12 +31,16 @@ def desync(args):
     desync_tranfer = Desync(args.store, args.index)
     if args.command == "make":
         desync_tranfer.make_chunking(args.source, args.chunk_size)
+    elif args.command == "extract":
+        desync_tranfer.deliver(args.cache, args.source)
 
 
 def casync(args):
     casync_tranfer = Casync(args.store, args.index)
     if args.command == "make":
         casync_tranfer.make_chunking(args.source, args.chunk_size)
+    elif args.command == "extract":
+        casync_tranfer.deliver(args.cache, args.source)
 
 
 def main():

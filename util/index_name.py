@@ -18,7 +18,7 @@ def validate_index_name(index_file_name, file):
     else:
         if index_file_name.endswith(".caidx"):
             raise IncorrectIndexFileName(
-                "{} is directory! Index must be .caibx file".format(file)
+                "{} is not a directory! Index must be .caibx file".format(file)
             )
         elif not index_file_name.endswith(".caibx"):
             index_file_name += ".caibx"
