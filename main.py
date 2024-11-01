@@ -1,21 +1,42 @@
-from make_chunking.make_chunking import make_chunking
+from empirical_delivery.desync import Desync
+from empirical_delivery.casync import Casync
 import argparse
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(help="subcommand help")
-    make_parser = subparsers.add_parser("make")
-    make_parser.add_argument("source")
-    make_parser.add_argument("-s", "--store", required=True)
-    make_parser.add_argument("-m", "--chunk-size", default="16:64:256")
-    make_parser.add_argument("--seed", required=True)
-    make_parser.set_defaults(func=cmd_make)
+    desync_parser = subparsers.add_parser("desync")
+    desync_parser.add_argument("command")
+    desync_parser.add_argument("index")
+    desync_parser.add_argument("source")
+    desync_parser.add_argument("-s", "--store", required=True)
+    desync_parser.add_argument("-c", "--cache")
+    desync_parser.add_argument("-m", "--chunk-size", default="16:64:256")
+    desync_parser.set_defaults(func=desync)
+
+    casync_parser = subparsers.add_parser("casync")
+    casync_parser.add_argument("command")
+    casync_parser.add_argument("index")
+    casync_parser.add_argument("source")
+    casync_parser.add_argument("-s", "--store", required=True)
+    casync_parser.add_argument("-c", "--cache")
+    casync_parser.add_argument("-m", "--chunk-size", default="16384:65536:262144")
+    casync_parser.set_defaults(func=casync)
+
     return parser.parse_args()
 
 
-def cmd_make(args):
-    make_chunking(args.store, args.seed, args.source, args.chunk_size)
+def desync(args):
+    desync_tranfer = Desync(args.store, args.index)
+    if args.command == "make":
+        desync_tranfer.make_chunking(args.source, args.chunk_size)
+
+
+def casync(args):
+    casync_tranfer = Casync(args.store, args.index)
+    if args.command == "make":
+        casync_tranfer.make_chunking(args.source, args.chunk_size)
 
 
 def main():
