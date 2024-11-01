@@ -35,5 +35,16 @@ class Casync(EmpiricalDelivery):
             ]
         )
 
-    def deliver(self):
-        pass
+    def deliver(self, local_cache_store, output):
+        run(
+            [
+                "casync",
+                "extract",
+                self._index_store,
+                output,
+                "--store",
+                self._cache_store,
+                "--cache",
+                local_cache_store,
+            ]
+        )
