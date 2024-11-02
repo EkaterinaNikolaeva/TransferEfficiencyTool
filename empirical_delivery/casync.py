@@ -1,15 +1,11 @@
-from .empirical_delivery import EmpiricalDelivery
+from .empirical_cas_delivery import EmpiricalCasDelivery
 from util.exec import run
 from util.index_name import validate_index_name, IncorrectIndexFileName
 from typing import List
 import logging
 
 
-class Casync(EmpiricalDelivery):
-    def __init__(self, cache_store: str, index_store: str):
-        self._cache_store = cache_store
-        self._index_store = index_store
-
+class Casync(EmpiricalCasDelivery):
     def make_chunking(
         self,
         source,

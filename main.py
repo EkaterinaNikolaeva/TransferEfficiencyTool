@@ -1,5 +1,6 @@
 from empirical_delivery.desync import Desync
 from empirical_delivery.casync import Casync
+from empirical_delivery.rsync import Rsync
 import argparse
 
 
@@ -24,6 +25,11 @@ def parse_args():
     casync_parser.add_argument("-m", "--chunk-size", default="16384:65536:262144")
     casync_parser.set_defaults(func=casync)
 
+    rsync_parser = subparsers.add_parser("rsync")
+    rsync_parser.add_argument("source")
+    rsync_parser.add_argument("output")
+    rsync_parser.set_defaults(func=rsync)
+
     return parser.parse_args()
 
 
@@ -41,6 +47,11 @@ def casync(args):
         casync_tranfer.make_chunking(args.source, args.chunk_size)
     elif args.command == "extract":
         casync_tranfer.deliver(args.cache, args.source)
+
+
+def rsync(args):
+    rsync_tranfer = Rsync()
+    rsync_tranfer.deliver(args.source, args.output)
 
 
 def main():
