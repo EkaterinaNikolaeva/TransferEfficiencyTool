@@ -1,4 +1,4 @@
-from .empirical_cas_delivery import EmpiricalCasDelivery
+from empirical_delivery.empirical_cas_delivery import EmpiricalCasDelivery
 from util.exec import run
 from util.index_name import validate_index_name, IncorrectIndexFileName
 from typing import List
@@ -9,10 +9,11 @@ class Casync(EmpiricalCasDelivery):
     def make_chunking(
         self,
         source,
+        index_store,
         chunk_size="16:64:256",
     ):
         try:
-            self._index_store = validate_index_name(self._index_store, source)
+            index_store = validate_index_name(index_store, source)
         except IncorrectIndexFileName as e:
             logging.error(
                 "Exception when validating index store file name: {}".format(e.message)
@@ -22,7 +23,7 @@ class Casync(EmpiricalCasDelivery):
             [
                 "casync",
                 "make",
-                self._index_store,
+                index_store,
                 source,
                 "--chunk-size",
                 chunk_size,
@@ -31,16 +32,16 @@ class Casync(EmpiricalCasDelivery):
             ]
         )
 
-    def deliver(self, local_cache_store, output):
+    def deliver(self, output, index_store):
         run(
             [
                 "casync",
                 "extract",
-                self._index_store,
+                index_store,
                 output,
                 "--store",
                 self._cache_store,
                 "--cache",
-                local_cache_store,
+                self._local_cache_store,
             ]
         )

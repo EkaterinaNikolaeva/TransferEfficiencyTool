@@ -2,12 +2,12 @@ from abc import ABC
 
 
 class EmpiricalCasDelivery(ABC):
-    def __init__(self, cache_store: str, index_store: str):
+    def __init__(self, cache_store: str, local_cache_store: str):
         self._cache_store = cache_store
-        self._index_store = index_store
+        self._local_cache_store = local_cache_store
 
-    def make_chunking(self, source, chunk_size="16:64:256"):
+    def make_chunking(self, source, index_store, chunk_size="16:64:256"):
         pass
 
-    def deliver(self, local_cache_store, output):
+    def deliver(self, output, index_store):
         pass

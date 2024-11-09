@@ -1,0 +1,12 @@
+name: ClickHouse
+local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/clickhouse/'
+remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
+index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
+versions: [
+  ['jun', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-jun', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-jun'],
+  ['jul', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-jul', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-jul'],
+  ['aug', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-aug', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-aug'], 
+  ['sep', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-sep', /home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-sep'],
+  ['oct', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-oct', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-oct'],
+  ['nov', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-nov', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-nov']
+]
