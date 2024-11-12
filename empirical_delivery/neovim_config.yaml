@@ -1,6 +1,6 @@
 name: Neovim
 local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/neovim/'
-remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/neovim/'
+remote_storage: 'http://localhost:8000/'
 index_storage: '/home/kate/TransferEfficiencyTool/index/neovim/'
 versions: [
   ['7-0', '/home/kate/TransferEfficiencyTool/test_data/neovim/neovim-7-0', '/home/kate/TransferEfficiencyTool/results/neovim/neovim-7-0'],
