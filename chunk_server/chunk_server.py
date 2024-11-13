@@ -56,4 +56,4 @@ if __name__ == "__main__":
     args = parse_args()
     STORAGE = args.storage
     os.makedirs(STORAGE, exist_ok=True)
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="127.0.0.1", port=8000)

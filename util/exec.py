@@ -4,7 +4,7 @@ import sys
 from typing import List
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 def run(command: List[str]):

@@ -6,11 +6,15 @@ import logging
 
 
 class Casync(EmpiricalCasDelivery):
+    def __init__(self, cache_store: str, local_cache_store: str, cache_story_for_make):
+        super().__init__(cache_store, local_cache_store)
+        self._cache_story_for_make = cache_story_for_make
+
     def make_chunking(
         self,
         source,
         index_store,
-        chunk_size="16:64:256",
+        chunk_size="16384:65536:262144",
     ):
         try:
             index_store = validate_index_name(index_store, source)
@@ -28,11 +32,12 @@ class Casync(EmpiricalCasDelivery):
                 "--chunk-size",
                 chunk_size,
                 "--store",
-                self._cache_store,
+                self._cache_story_for_make,
             ]
         )
 
     def deliver(self, output, index_store):
+        print(self._local_cache_store)
         run(
             [
                 "casync",

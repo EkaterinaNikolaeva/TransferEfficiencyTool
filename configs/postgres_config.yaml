@@ -1,0 +1,21 @@
+name: Postgres
+local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/postgres/'
+remote_storage: 'http://127.0.0.1:8000/'
+index_storage: '/home/kate/TransferEfficiencyTool/index/postgres/'
+versions: [
+  ['14-0', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-0.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-0.tar'],
+  ['14-1', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-1.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-1.tar'],
+  ['14-2', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-2.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-2.tar'], 
+  ['14-3', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-3.tar', /home/kate/TransferEfficiencyTool/results/postgres/postgres-14-3.tar'],
+  ['14-4', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-4.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-4.tar'],
+  ['14-5', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-5.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-5.tar'],
+  ['14-6', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-6.tar'],
+  ['14-7', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-7.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-7.tar'],
+  ['14-8', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-8.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-8.tar'],
+  ['14-9', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-9.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-9.tar'],
+  ['14-10', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-10.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-10.tar'],
+  ['14-11', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-11.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-11.tar'],
+  ['14-12', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-12.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-12.tar'],
+  ['14-13', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-13.tar']
+]                                                                                                                                                                                       
+
