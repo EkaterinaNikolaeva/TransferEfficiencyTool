@@ -12,6 +12,7 @@ class Rsync:
         run(
             [
                 "rsync",
+                "-az",
                 source,
                 output,
             ]

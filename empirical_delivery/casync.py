@@ -48,5 +48,7 @@ class Casync(EmpiricalCasDelivery):
                 self._cache_store,
                 "--cache",
                 self._local_cache_store,
+                "--reflink",
+                "no",
             ]
         )

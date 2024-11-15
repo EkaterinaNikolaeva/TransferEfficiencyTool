@@ -1,21 +1,51 @@
 name: Postgres
 local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/postgres/'
 remote_storage: 'http://127.0.0.1:8000/'
+local_storage_for_casync_make: '/home/kate/TransferEfficiencyTool/remote_storage/postgres/'
 index_storage: '/home/kate/TransferEfficiencyTool/index/postgres/'
-versions: [
-  ['14-0', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-0.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-0.tar'],
-  ['14-1', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-1.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-1.tar'],
-  ['14-2', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-2.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-2.tar'], 
-  ['14-3', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-3.tar', /home/kate/TransferEfficiencyTool/results/postgres/postgres-14-3.tar'],
-  ['14-4', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-4.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-4.tar'],
-  ['14-5', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-5.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-5.tar'],
-  ['14-6', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-6.tar'],
-  ['14-7', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-7.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-7.tar'],
-  ['14-8', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-8.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-8.tar'],
-  ['14-9', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-9.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-9.tar'],
-  ['14-10', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-10.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-10.tar'],
-  ['14-11', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-11.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-11.tar'],
-  ['14-12', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-12.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-12.tar'],
-  ['14-13', '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar', '/home/kate/TransferEfficiencyTool/results/postgres/postgres-14-13.tar']
-]                                                                                                                                                                                       
-
+dest_path: '/home/kate/TransferEfficiencyTool/results/postgres/{}.tar'
+versions:
+  - name: '14-0'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-0.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-0.tar'
+  - name: '14-1'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-1.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-1.tar'
+  - name: '14-2'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-2.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-2.tar'
+  - name: '14-3'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-3.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-3.tar'
+  - name: '14-4'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-4.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-4.tar'
+  - name: '14-5'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-5.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-5.tar'
+  - name: '14-6'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar'
+  - name: '14-7'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-7.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-7.tar'
+  - name: '14-8'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-8.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-8.tar'
+  - name: '14-9'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-9.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-9.tar'
+  - name: '14-10'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-10.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-10.tar'
+  - name: '14-11'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-11.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-11.tar'
+  - name: '14-12'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-12.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-12.tar'
+  - name: '14-13'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
+result_data_file: '/home/kate/TransferEfficiencyTool/results/postgres/postgres.yaml'
+result_plot_file: '/home/kate/TransferEfficiencyTool/results/postgres/postgres.png'

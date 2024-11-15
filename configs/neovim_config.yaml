@@ -3,13 +3,31 @@ local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/neovim/'
 remote_storage: 'http://127.0.0.1:8000/'
 local_storage_for_casync_make: '/home/kate/TransferEfficiencyTool/remote_storage/neovim/'
 index_storage: '/home/kate/TransferEfficiencyTool/index/neovim/'
-versions: [
-  ['7-0', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-0', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-7-0'],
-  ['7-2', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-2', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-7-2'],
-  ['8-0', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-8-0', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-8-0'], 
-  ['9-0', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-0', /home/kate/TransferEfficiencyTool/results/neovim/nvim-9-0'],
-  ['9-1', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-1', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-9-1'],
-  ['9-2', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-2', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-9-2'],
-  ['9-4', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-4', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-9-4'],
-  ['9-5', '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5', '/home/kate/TransferEfficiencyTool/results/neovim/nvim-9-5']
-]
+dest_path: '/home/kate/TransferEfficiencyTool/results/neovim/{}'
+versions:
+  - name: '7-0'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-0'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-0/'
+  - name: '7-2'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-2/'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-2/'
+  - name: '8-0'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-8-0'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-8-0/'
+  - name: '9-0'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-0'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-0/'
+  - name: '9-1'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-1'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-1/'
+  - name: '9-2'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-2'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-2/'
+  - name: '9-4'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-4'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-4/'
+  - name: '9-5'
+    src_path: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5'
+    rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5/'
+result_data_file: '/home/kate/TransferEfficiencyTool/results/neovim/neovim.yaml'
+result_plot_file: '/home/kate/TransferEfficiencyTool/results/neovim/neovim.png'
