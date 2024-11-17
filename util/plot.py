@@ -7,10 +7,6 @@ WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 400
 
 
-def random_color():
-    return (random.random(), random.random(), random.random())
-
-
 def make_plot(
     name: str, versions: List[str], data: Dict[str, List[float]], plot_file: str
 ):
@@ -31,7 +27,6 @@ def make_plot(
             versions,
             subplot_data,
             label=subplot_name,
-            color=random_color(),
         )
     axes.legend()
 

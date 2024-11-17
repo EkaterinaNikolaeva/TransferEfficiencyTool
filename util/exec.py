@@ -10,8 +10,9 @@ logging.basicConfig(level=logging.INFO)
 def run(command: List[str]):
     logger.info(" ".join(command))
     try:
-        subprocess.check_output(command)
+        output = subprocess.check_output(command)
     except subprocess.CalledProcessError as e:
         logger.error("Return code: {}".format(e.returncode))
         exit(e.returncode)
     logger.info("OK")
+    return str(output)

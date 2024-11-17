@@ -91,22 +91,23 @@ def run(config_file, only_make_chunking=False, only_deliver=False):
     version_names = [version["name"] for version in config["versions"]]
     plot_data = {}
 
-    # casync_transmitter = Casync(
-    #     config["remote_storage"],
-    #     join_dirs(config["local_cache_store"], CASYNC),
-    #     config["local_storage_for_casync_make"],
-    # )
-    # plot_data[CASYNC] = transfer_using_cas(
-    #     casync_transmitter,
-    #     config["versions"],
-    #     join_dirs(config["index_storage"], CASYNC),
-    #     config["dest_path"].format(CASYNC),
-    #     only_make_chunking,
-    #     only_deliver,
-    # )
+    casync_transmitter = Casync(
+        config.get("remote_storage_casync") or config["remote_storage"],
+        join_dirs(config["local_cache_store"], CASYNC),
+        config["local_storage_for_casync_make"],
+    )
+    plot_data[CASYNC] = transfer_using_cas(
+        casync_transmitter,
+        config["versions"],
+        join_dirs(config["index_storage"], CASYNC),
+        config["dest_path"].format(CASYNC),
+        only_make_chunking,
+        only_deliver,
+    )
 
     desync_transmitter = Desync(
-        config["remote_storage"], join_dirs(config["local_cache_store"], DESYNC)
+        config.get("remote_storage_desync") or config["remote_storage"],
+        join_dirs(config["local_cache_store"], DESYNC),
     )
     plot_data[DESYNC] = transfer_using_cas(
         desync_transmitter,

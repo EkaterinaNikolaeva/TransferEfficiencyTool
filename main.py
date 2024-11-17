@@ -11,8 +11,8 @@ def parse_args():
 
     experiment_parser = subparsers.add_parser("experiment")
     experiment_parser.add_argument("--config-file", required=True)
-    experiment_parser.add_argument("--only-chunking", action='store_true')
-    experiment_parser.add_argument("--only-deliver", action='store_true')
+    experiment_parser.add_argument("--only-chunking", action="store_true")
+    experiment_parser.add_argument("--only-deliver", action="store_true")
     experiment_parser.set_defaults(func=run_experiment)
 
     desync_parser = subparsers.add_parser("desync")

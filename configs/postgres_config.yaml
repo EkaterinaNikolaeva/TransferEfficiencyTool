@@ -1,6 +1,7 @@
 name: Postgres
 local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/postgres/'
-remote_storage: 'http://127.0.0.1:8000/'
+remote_storage_casync: 'localhost:/home/kate/TransferEfficiencyTool/remote_storage/postgres/'
+remote_storage_desync: 'http://127.0.0.1:8000/'
 local_storage_for_casync_make: '/home/kate/TransferEfficiencyTool/remote_storage/postgres/'
 index_storage: '/home/kate/TransferEfficiencyTool/index/postgres/'
 dest_path: '/home/kate/TransferEfficiencyTool/results/postgres/{}.tar'
@@ -47,5 +48,5 @@ versions:
   - name: '14-13'
     src_path: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
     rsync_src_path: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
-result_data_file: '/home/kate/TransferEfficiencyTool/results/postgres/postgres.yaml'
-result_plot_file: '/home/kate/TransferEfficiencyTool/results/postgres/postgres.png'
+result_data_file: '/home/kate/TransferEfficiencyTool/measurements/postgres/postgres_ssh.yaml'
+result_plot_file: '/home/kate/TransferEfficiencyTool/plot/postgres/postgres_ssh.png'
