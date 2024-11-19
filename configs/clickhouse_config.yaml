@@ -1,18 +1,43 @@
 name: ClickHouse
 local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/clickhouse/'
-remote_storage: 'http://127.0.0.1:8000/'
+remote_storage_casync: 'localhost:/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
+remote_storage_desync: 'http://127.0.0.1:8000/'
 index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
-# rsync_remote_storage: 'localhost:/home/kate/TransferEfficiencyTool/index/clickhouse/'
-versions: [
-  ['jan', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-jan', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-jan'],
-  ['feb', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-feb', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-feb'],
-  ['mar', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-mar', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-mar'],
-  ['apr', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-apr', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-apr'],
-  ['may', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-may', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-may'],
-  ['jun', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-jun', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-jun'],
-  ['jul', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-jul', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-jul'],
-  ['aug', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-aug', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-aug'], 
-  ['sep', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-sep', /home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-sep'],
-  ['oct', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-oct', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-oct'],
-  ['nov', '/home/kate/TransferEfficiencyTool/test_data/ClickHouse/ClickHouse-nov', '/home/kate/TransferEfficiencyTool/results/ClickHouse/ClickHouse-nov']
-]
+local_storage_for_casync_make: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
+dest_path: '/home/kate/results/clickhouse/{}'
+versions:
+  - name: 'jan'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-jan'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jan/'
+  - name: 'feb'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-feb'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-feb/'
+  - name: 'mar'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-mar'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-mar/'
+  - name: 'apr'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-apr'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-apr/'
+  - name: 'may'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-may'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-may/'
+  - name: 'jun'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-jun'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jun/'
+  - name: 'jul'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-jul'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jul/'
+  - name: 'aug'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-aug'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-aug/'
+  - name: 'sep'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-sep'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-sep/'
+  - name: 'oct'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-oct'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-oct/'
+  - name: 'nov'
+    src_path: '/home/kate/test_data/clickhouse/ClickHouse-nov'
+    rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-nov/'
+result_data_file: '/home/kate/TransferEfficiencyTool/results/clickhouse/clickhouse_ssh.yaml'
+result_plot_file: '/home/kate/TransferEfficiencyTool/results/clickhouse/clickhouse_ssh.png'
