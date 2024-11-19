@@ -1,6 +1,6 @@
-from empirical_delivery.desync import Desync
-from empirical_delivery.casync import Casync
-from empirical_delivery.rsync import Rsync
+from delivery_systems.desync import Desync
+from delivery_systems.casync import Casync
+from delivery_systems.rsync import Rsync
 import empirical_delivery.experiment as experiment
 import argparse
 

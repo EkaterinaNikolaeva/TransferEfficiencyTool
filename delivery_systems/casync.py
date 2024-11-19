@@ -1,4 +1,4 @@
-from empirical_delivery.empirical_cas_delivery import EmpiricalCasDelivery
+from delivery_systems.empirical_cas_delivery import EmpiricalCasDelivery
 from util.exec import run
 from util.index_name import validate_index_name, IncorrectIndexFileName
 from typing import List
