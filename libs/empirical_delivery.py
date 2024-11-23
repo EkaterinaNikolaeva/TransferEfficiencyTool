@@ -1,7 +1,7 @@
-from delivery_systems.casync import Casync
-from delivery_systems.desync import Desync
-from delivery_systems.rsync import Rsync
-from delivery_systems.empirical_cas_delivery import EmpiricalCasDelivery
+from libs.delivery_systems.casync import Casync
+from libs.delivery_systems.desync import Desync
+from libs.delivery_systems.rsync import Rsync
+from libs.delivery_systems.empirical_cas_delivery import EmpiricalCasDelivery
 
 from util.index_name import validate_index_name
 from util.plot import make_plot
@@ -36,17 +36,6 @@ def safe_data_to_file(file_name, data):
         yaml.dump(data, f)
 
 
-def deliver(transmitter: EmpiricalCasDelivery, path_index_file: str, destination: str):
-    start = time.time()
-    transmitter.deliver(destination, path_index_file)
-    end = time.time()
-    return end - start
-
-
-def make_chunking(transmitter, path_index_file, source):
-    transmitter.make_chunking(source, path_index_file)
-
-
 def join_dirs(prefix, suffix):
     name = os.path.join(prefix, suffix)
     os.makedirs(name, exist_ok=True)
@@ -58,26 +47,19 @@ def transfer_using_cas(
     versions,
     index_storage_name: str,
     dest_path: str,
-    only_make_chunking=False,
-    only_deliver=False,
 ):
     y_data = []
     for version in versions:
         index_file_name = validate_index_name(version["name"], version["src_path"])
         path_index_file = os.path.join(index_storage_name, index_file_name)
-        if not only_deliver:
-            transmitter.make_chunking(version["src_path"], path_index_file)
-        if not only_make_chunking:
-            start = time.time()
-            transmitter.deliver(dest_path, path_index_file)
-            end = time.time()
-            y_data.append(end - start)
+        start = time.time()
+        transmitter.deliver(dest_path, path_index_file)
+        end = time.time()
+        y_data.append(end - start)
     return y_data
 
 
 def transfer_using_rsync(transmitter, versions, dest_path, only_make_chunking):
-    if only_make_chunking:
-        return
     y_data = []
     for version in versions:
         start = time.time()

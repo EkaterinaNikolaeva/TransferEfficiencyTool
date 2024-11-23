@@ -1,74 +1,95 @@
-from delivery_systems.desync import Desync
-from delivery_systems.casync import Casync
-from delivery_systems.rsync import Rsync
-import empirical_delivery.experiment as experiment
+from libs.config import parse_config
+import libs.const as const
+from libs.make_indexes import make_indexes
+from libs.cache_hit import calculate_cache_hit_by_indexes, calculate_average_cache_hit
+from util.join_dirs import join_dirs
+from util.plot import make_plot
+from util.dump_data import safe_data_to_file
 import argparse
+import os
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(help="subcommand help")
 
-    experiment_parser = subparsers.add_parser("experiment")
-    experiment_parser.add_argument("--config-file", required=True)
-    experiment_parser.add_argument("--only-chunking", action="store_true")
-    experiment_parser.add_argument("--only-deliver", action="store_true")
-    experiment_parser.set_defaults(func=run_experiment)
-
-    desync_parser = subparsers.add_parser("desync")
-    desync_parser.add_argument("command")
-    desync_parser.add_argument("index")
-    desync_parser.add_argument("source")
-    desync_parser.add_argument("-s", "--store", required=True)
-    desync_parser.add_argument("-c", "--cache", default=None)
-    desync_parser.add_argument("-m", "--chunk-size", default="16:64:256")
-    desync_parser.set_defaults(func=desync)
-
-    casync_parser = subparsers.add_parser("casync")
-    casync_parser.add_argument("command")
-    casync_parser.add_argument("index")
-    casync_parser.add_argument("source")
-    casync_parser.add_argument("-s", "--store", required=True)
-    casync_parser.add_argument("-c", "--cache", default=None)
-    casync_parser.add_argument("-m", "--chunk-size", default="16384:65536:262144")
-    casync_parser.set_defaults(func=casync)
-
-    rsync_parser = subparsers.add_parser("rsync")
-    rsync_parser.add_argument("source")
-    rsync_parser.add_argument("output")
-    rsync_parser.set_defaults(func=rsync)
+    parser.add_argument("--config-file", required=True)
+    parser.add_argument("--only-chunking", action="store_true")
+    parser.add_argument("--only-deliver", action="store_true")
 
     return parser.parse_args()
 
 
-def run_experiment(args):
-    experiment.run(args.config_file, args.only_chunking, args.only_deliver)
+def preprocess(config):
+    for transmitter_name in config.cas_transmitters:
+        transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
+        make_indexes(
+            transmitter_class,
+            chunk_sizes=config.cas_config.chunk_sizes,
+            remote_store=os.path.join(
+                config.cas_config.local_version_of_remote_storage, transmitter_name
+            ),
+            local_cache_dir=os.path.join(
+                config.cas_config.local_cache_store, transmitter_name
+            ),
+            index_store=os.path.join(config.cas_config.index_storage, transmitter_name),
+            version_list=config.versions,
+            factor=const.CAS_CHUNK_SIZES_FACTOR[transmitter_name],
+        )
 
 
-def desync(args):
-    desync_tranfer = Desync(args.store, args.cache)
-    if args.command == "make":
-        desync_tranfer.make_chunking(args.source, args.index, args.chunk_size)
-    elif args.command == "extract":
-        desync_tranfer.deliver(args.source, args.index)
-
-
-def casync(args):
-    casync_tranfer = Casync(args.store, args.cache)
-    if args.command == "make":
-        casync_tranfer.make_chunking(args.source, args.index, args.chunk_size)
-    elif args.command == "extract":
-        casync_tranfer.deliver(args.source, args.index)
-
-
-def rsync(args):
-    rsync_tranfer = Rsync()
-    rsync_tranfer.deliver(args.source, args.output)
+def calculate_cache_hit(config):
+    average_cache_hits_by_transmitter = {}
+    for transmitter_name in config.cas_transmitters:
+        cache_hits = calculate_cache_hit_by_indexes(
+            os.path.join(config.cas_config.index_storage, transmitter_name),
+            config.versions,
+            data_file=os.path.join(
+                join_dirs(config.result_data_store, transmitter_name), "cache_hit.yaml"
+            ),
+            plot_file=os.path.join(
+                join_dirs(config.result_plot_store, transmitter_name), "cache_hit.png"
+            ),
+        )
+        average_cache_hits = calculate_average_cache_hit(
+            cache_hits,
+            config.cas_config.chunk_sizes,
+            data_file=os.path.join(
+                join_dirs(config.result_data_store, transmitter_name),
+                "average_cache_hit.yaml",
+            ),
+            plot_file=os.path.join(
+                join_dirs(config.result_plot_store, transmitter_name),
+                "average_cache_hit.png",
+            ),
+        )
+        average_cache_hits_by_transmitter[transmitter_name] = average_cache_hits
+    print(average_cache_hits_by_transmitter)
+    make_plot(
+        "Average cache hit",
+        config.cas_config.chunk_sizes,
+        average_cache_hits_by_transmitter,
+        os.path.join(
+            config.result_plot_store,
+            "average_cache_hit.png",
+        ),
+        xlabel="Chunk sizes",
+        ylabel="Cache hit",
+    )
+    safe_data_to_file(
+        os.path.join(
+            config.result_data_store,
+            "average_cache_hit.yaml",
+        ),
+        data=average_cache_hits_by_transmitter,
+    )
 
 
 def main():
     args = parse_args()
-    args.func(args)
+    config = parse_config(args.config_file)
+    if not args.only_deliver:
+        preprocess(config)
+    calculate_cache_hit(config)
 
 
 if __name__ == "__main__":

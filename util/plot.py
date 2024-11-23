@@ -8,7 +8,12 @@ WINDOW_HEIGHT = 400
 
 
 def make_plot(
-    name: str, versions: List[str], data: Dict[str, List[float]], plot_file: str
+    name: str,
+    versions: List[str],
+    data: Dict[str, List[float]],
+    plot_file: str | None = None,
+    xlabel="Version",
+    ylabel="Time",
 ):
     figure = plt.figure(figsize=(WINDOW_WIDTH / SCREEN_DPI, WINDOW_HEIGHT / SCREEN_DPI))
 
@@ -17,8 +22,8 @@ def make_plot(
     axes.grid(which="minor", alpha=0.35)
     axes.grid(which="major", alpha=0.7)
 
-    axes.set_xlabel("Version")
-    axes.set_ylabel("Time")
+    axes.set_xlabel(xlabel)
+    axes.set_ylabel(ylabel)
 
     axes.set_title(name)
 
@@ -29,10 +34,10 @@ def make_plot(
             label=subplot_name,
         )
     axes.legend()
-
-    figure.savefig(
-        plot_file,
-        dpi=SCREEN_DPI,
-    )
+    if plot_file is not None:
+        figure.savefig(
+            plot_file,
+            dpi=SCREEN_DPI,
+        )
     figure.show()
     plt.show()

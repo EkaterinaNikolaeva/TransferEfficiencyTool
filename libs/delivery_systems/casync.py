@@ -1,4 +1,4 @@
-from delivery_systems.empirical_cas_delivery import EmpiricalCasDelivery
+from libs.delivery_systems.empirical_cas_delivery import EmpiricalCasDelivery
 from util.exec import run
 from util.index_name import validate_index_name, IncorrectIndexFileName
 from typing import List
@@ -6,9 +6,8 @@ import logging
 
 
 class Casync(EmpiricalCasDelivery):
-    def __init__(self, cache_store: str, local_cache_store: str, cache_story_for_make):
+    def __init__(self, cache_store: str, local_cache_store: str):
         super().__init__(cache_store, local_cache_store)
-        self._cache_story_for_make = cache_story_for_make
 
     def make_chunking(
         self,
@@ -32,7 +31,7 @@ class Casync(EmpiricalCasDelivery):
                 "--chunk-size",
                 chunk_size,
                 "--store",
-                self._cache_story_for_make,
+                self._cache_store,
             ]
         )
 

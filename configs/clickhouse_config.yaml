@@ -1,10 +1,11 @@
 name: ClickHouse
-local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/clickhouse/'
-remote_storage_casync: 'localhost:/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
-remote_storage_desync: 'http://127.0.0.1:8000/'
-index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
-local_storage_for_casync_make: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
-dest_path: '/home/kate/results/clickhouse/{}'
+cas_config:
+  local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/clickhouse/'
+  remote_storage_casync: 'localhost:/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
+  remote_storage_desync: 'http://127.0.0.1:8000/'
+  index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
+  local_version_of_remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
+  chunk_sizes: [8, 16, 32, 64, 96, 128, 192, 256, 384, 512]
 versions:
   - name: 'jan'
     src_path: '/home/kate/test_data/clickhouse/ClickHouse-jan'
@@ -39,5 +40,11 @@ versions:
   - name: 'nov'
     src_path: '/home/kate/test_data/clickhouse/ClickHouse-nov'
     rsync_src_path: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-nov/'
-result_data_file: '/home/kate/TransferEfficiencyTool/results/clickhouse/clickhouse_ssh.yaml'
-result_plot_file: '/home/kate/TransferEfficiencyTool/results/clickhouse/clickhouse_ssh.png'
+cas_transmitters:
+  - desync
+  - casync
+rsync_transmitters:
+  - rsync
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse/'
+dest_path: '/home/kate/results/clickhouse/{}'
