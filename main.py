@@ -107,6 +107,7 @@ def deliver_experimentally(config):
     for transmitter_name in config.rsync_transmitters:
         transmitter_class = const.RSYNC_TRANSMITTERS[transmitter_name]
         plot_data += transfer_using_rsync(
+            transmitter_name=transmitter_name,
             transmitter_class=transmitter_class,
             versions=config.versions,
             dest_path=config.dest_path.format(transmitter_name),
