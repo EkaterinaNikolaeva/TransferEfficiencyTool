@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
 import yaml
 from dacite import from_dict
 
@@ -17,9 +17,7 @@ class CasDeliverConfig:
     index_storage: str
     local_version_of_remote_storage: str
     chunk_sizes: List[int]
-    remote_storage: str | None = None
-    remote_storage_casync: str | None = None
-    remote_storage_desync: str | None = None
+    remote_storage: Dict[str, str]
 
 
 @dataclass(frozen=True)

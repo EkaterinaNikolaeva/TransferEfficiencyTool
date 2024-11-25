@@ -2,8 +2,9 @@ from libs.config import parse_config
 import libs.const as const
 from libs.make_indexes import make_indexes
 from libs.cache_hit import calculate_cache_hit_by_indexes, calculate_average_cache_hit
+from libs.empirical_delivery import transfer_using_cas, transfer_using_rsync
 from util.join_dirs import join_dirs
-from util.plot import make_plot
+from util.plot import make_plot, Subplot
 from util.dump_data import safe_data_to_file
 import argparse
 import os
@@ -38,7 +39,7 @@ def preprocess(config):
 
 
 def calculate_cache_hit(config):
-    average_cache_hits_by_transmitter = {}
+    average_cache_hits_by_transmitter = []
     for transmitter_name in config.cas_transmitters:
         cache_hits = calculate_cache_hit_by_indexes(
             os.path.join(config.cas_config.index_storage, transmitter_name),
@@ -62,8 +63,9 @@ def calculate_cache_hit(config):
                 "average_cache_hit.png",
             ),
         )
-        average_cache_hits_by_transmitter[transmitter_name] = average_cache_hits
-    print(average_cache_hits_by_transmitter)
+        average_cache_hits_by_transmitter.append(
+            Subplot(name=transmitter_name, data=average_cache_hits)
+        )
     make_plot(
         "Average cache hit",
         config.cas_config.chunk_sizes,
@@ -84,12 +86,48 @@ def calculate_cache_hit(config):
     )
 
 
+def deliver_experimentally(config):
+    plot_data = []
+    for transmitter_name in config.cas_transmitters:
+        transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
+        plot_data += transfer_using_cas(
+            transmitter_name=transmitter_name,
+            transmitter_class=transmitter_class,
+            chunk_sizes=config.cas_config.chunk_sizes,
+            remote_store=os.path.join(
+                config.cas_config.local_version_of_remote_storage, transmitter_name
+            ),
+            local_cache_dir=os.path.join(
+                config.cas_config.local_cache_store, transmitter_name
+            ),
+            index_store=os.path.join(config.cas_config.index_storage, transmitter_name),
+            versions=config.versions,
+            dest_path=config.dest_path.format(transmitter_name),
+        )
+    for transmitter_name in config.rsync_transmitters:
+        transmitter_class = const.RSYNC_TRANSMITTERS[transmitter_name]
+        plot_data += transfer_using_rsync(
+            transmitter_class=transmitter_class,
+            versions=config.versions,
+            dest_path=config.dest_path.format(transmitter_name),
+        )
+    make_plot(
+        "Time comparison of different transmitters",
+        [version.name for version in config.versions],
+        plot_data,
+        plot_file=os.path.join(config.result_plot_store, "time_comparison.png"),
+        xlabel="Version",
+        ylabel="Time",
+    )
+
+
 def main():
     args = parse_args()
     config = parse_config(args.config_file)
     if not args.only_deliver:
         preprocess(config)
-    calculate_cache_hit(config)
+    # calculate_cache_hits(config)
+    deliver_experimentally(config)
 
 
 if __name__ == "__main__":

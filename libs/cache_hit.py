@@ -1,9 +1,8 @@
 import util.exec
 
-from util.plot import make_plot
+from util.plot import make_plot, Subplot
 from util.dump_data import safe_data_to_file
 import os
-from sortedcontainers import SortedDict
 
 
 def calculate_cache_hit(index_storage_dir, versions):
@@ -35,12 +34,21 @@ def calculate_cache_hit(index_storage_dir, versions):
 def calculate_cache_hit_by_indexes(
     index_storage, versions, data_file=None, plot_file=None
 ):
-    results = SortedDict()
+    results = []
+    index_dirs = []
     for file in os.listdir(index_storage):
         if os.path.isdir(os.path.join(index_storage, file)):
-            results[int(file)] = calculate_cache_hit(
-                os.path.join(index_storage, file), versions
+            index_dirs.append(int(file))
+    index_dirs.sort()
+    for dir in index_dirs:
+        results.append(
+            Subplot(
+                name=str(dir),
+                data=calculate_cache_hit(
+                    os.path.join(index_storage, str(dir)), versions
+                ),
             )
+        )
     if data_file is not None:
         safe_data_to_file(data_file, results)
     if plot_file is not None:
@@ -63,15 +71,15 @@ def calculate_average_cache_hit(
     cache_hits, chunk_sizes, data_file=None, plot_file=None
 ):
     average_cache_hits = []
-    for chunk_size in chunk_sizes:
-        average_cache_hits.append(find_average_cache_hit(cache_hits[chunk_size]))
+    for i in range(len(chunk_sizes)):
+        average_cache_hits.append(find_average_cache_hit(cache_hits[i].data))
     if data_file is not None:
         safe_data_to_file(data_file, average_cache_hits)
     if plot_file is not None:
         make_plot(
             "Average cache hit",
             chunk_sizes,
-            {"": average_cache_hits},
+            [Subplot("", average_cache_hits)],
             plot_file=plot_file,
             xlabel="Chunk size",
             ylabel="Cache hit",

@@ -1,16 +1,22 @@
 import matplotlib.pyplot as plt
 from typing import Dict, List
-import random
+from dataclasses import dataclass
 
 SCREEN_DPI = 128
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 400
 
 
+@dataclass
+class Subplot:
+    name: str
+    data: List[float]
+
+
 def make_plot(
     name: str,
     versions: List[str],
-    data: Dict[str, List[float]],
+    data: List[Subplot],
     plot_file: str | None = None,
     xlabel="Version",
     ylabel="Time",
@@ -27,11 +33,11 @@ def make_plot(
 
     axes.set_title(name)
 
-    for subplot_name, subplot_data in data.items():
+    for subplot in data:
         axes.plot(
             versions,
-            subplot_data,
-            label=subplot_name,
+            subplot.data,
+            label=subplot.name,
         )
     axes.legend()
     if plot_file is not None:
