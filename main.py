@@ -2,7 +2,7 @@ from libs.config import parse_config
 import libs.const as const
 from libs.make_indexes import make_indexes
 from libs.cache_hit import calculate_cache_hit_by_indexes, calculate_average_cache_hit
-from libs.empirical_delivery import transfer_using_cas, transfer_using_rsync
+from libs.empirical_delivery import transfer_using_cas_all_chunks, transfer_using_rsync
 from util.join_dirs import join_dirs
 from util.plot import make_plot, Subplot
 from util.dump_data import safe_data_to_file
@@ -90,12 +90,12 @@ def deliver_experimentally(config):
     plot_data = []
     for transmitter_name in config.cas_transmitters:
         transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
-        plot_data += transfer_using_cas(
+        plot_data += transfer_using_cas_all_chunks(
             transmitter_name=transmitter_name,
             transmitter_class=transmitter_class,
             chunk_sizes=config.cas_config.chunk_sizes,
             remote_store=os.path.join(
-                config.cas_config.local_version_of_remote_storage, transmitter_name
+                config.cas_config.remote_storage[transmitter_name], transmitter_name
             ),
             local_cache_dir=os.path.join(
                 config.cas_config.local_cache_store, transmitter_name
@@ -120,6 +120,13 @@ def deliver_experimentally(config):
         xlabel="Version",
         ylabel="Time",
     )
+    safe_data_to_file(
+        os.path.join(
+            config.result_data_store,
+            "time_comparison.yaml",
+        ),
+        data=plot_data,
+    )
 
 
 def main():
@@ -127,8 +134,9 @@ def main():
     config = parse_config(args.config_file)
     if not args.only_deliver:
         preprocess(config)
-    # calculate_cache_hits(config)
-    deliver_experimentally(config)
+    if not args.only_chunking:
+        calculate_cache_hit(config)
+        deliver_experimentally(config)
 
 
 if __name__ == "__main__":
