@@ -7,8 +7,7 @@ from dacite import from_dict
 @dataclass(frozen=True)
 class Version:
     name: str
-    src_path: str
-    rsync_src_path: str
+    src_path: Dict[str, str]
 
 
 @dataclass(frozen=True)
@@ -26,7 +25,7 @@ class Config:
     cas_config: CasDeliverConfig
     versions: List[Version]
     cas_transmitters: List[str]
-    rsync_transmitters: List[str]
+    other_transmitters: List[str]
     dest_path: str
     result_data_store: str
     result_plot_store: str

@@ -2,7 +2,10 @@ from libs.config import parse_config
 import libs.const as const
 from libs.make_indexes import make_indexes
 from libs.cache_hit import calculate_cache_hit_by_indexes, calculate_average_cache_hit
-from libs.empirical_delivery import transfer_using_cas_all_chunks, transfer_using_rsync
+from libs.empirical_delivery import (
+    transfer_using_cas_all_chunks,
+    transfer_without_cache,
+)
 from util.join_dirs import join_dirs
 from util.plot import make_plot, Subplot
 from util.dump_data import safe_data_to_file
@@ -104,9 +107,9 @@ def deliver_experimentally(config):
             versions=config.versions,
             dest_path=config.dest_path.format(transmitter_name),
         )
-    for transmitter_name in config.rsync_transmitters:
-        transmitter_class = const.RSYNC_TRANSMITTERS[transmitter_name]
-        plot_data += transfer_using_rsync(
+    for transmitter_name in config.other_transmitters:
+        transmitter_class = const.OTHER_TRANSMITTERS[transmitter_name]
+        plot_data += transfer_without_cache(
             transmitter_name=transmitter_name,
             transmitter_class=transmitter_class,
             versions=config.versions,

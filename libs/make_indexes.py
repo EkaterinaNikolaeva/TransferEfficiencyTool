@@ -23,7 +23,7 @@ def make_indexes(
         index_dir = join_dirs(index_store, str(chunk_size))
         for version in version_list:
             transmitter.make_chunking(
-                version.src_path,
+                version.src_path["local"],
                 os.path.join(index_dir, os.path.basename(version.name)),
                 "{}:{}:{}".format(
                     avg_chunk_size_for_transmitter // 4,

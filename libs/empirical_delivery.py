@@ -9,7 +9,7 @@ import os.path
 def transfer_using_cas(transmitter, index_dir, dest_path, versions):
     y_data = []
     for version in versions:
-        index_file_name = validate_index_name(version.name, version.src_path)
+        index_file_name = validate_index_name(version.name, version.src_path["local"])
         path_index_file = os.path.join(index_dir, index_file_name)
         start = time.time()
         transmitter.deliver(dest_path, path_index_file)
@@ -45,12 +45,12 @@ def transfer_using_cas_all_chunks(
     return results
 
 
-def transfer_using_rsync(transmitter_name, transmitter_class, versions, dest_path):
+def transfer_without_cache(transmitter_name, transmitter_class, versions, dest_path):
     transmitter = transmitter_class()
     y_data = []
     for version in versions:
         start = time.time()
-        transmitter.deliver(version.rsync_src_path, dest_path)
+        transmitter.deliver(version.src_path[transmitter_name], dest_path)
         end = time.time()
         y_data.append(end - start)
     return [Subplot(transmitter_name, y_data)]
