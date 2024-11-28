@@ -1,0 +1,50 @@
+name: Neovim
+cas_config:
+  local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/neovim/'
+  remote_storage:
+    casync: 'localhost:/home/kate/TransferEfficiencyTool/remote_storage/neovim/'
+    desync: 'http://127.0.0.1:8000/'
+  index_storage: '/home/kate/TransferEfficiencyTool/index/neovim/'
+  local_version_of_remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/neovim/'
+  chunk_sizes: [8, 16, 32, 64, 96, 128, 192, 256, 384, 512]
+versions:
+  - name: '7-0'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-0'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-0'
+  - name: '7-2'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-2'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-7-2'
+  - name: '8-0'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-8-0'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-8-0'
+  - name: '9-0'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-0'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-0'
+  - name: '9-1'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-1'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-1'
+  - name: '9-2'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-2'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-2'
+  - name: '9-4'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-4'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-4'
+  - name: '9-5'
+    src_path: 
+      local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5'
+      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5'
+cas_transmitters:
+  - casync
+  - desync
+other_transmitters:
+  - rsync
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/neovim/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/neovim/'
+dest_path: '/home/kate/results/neovim/{}'
