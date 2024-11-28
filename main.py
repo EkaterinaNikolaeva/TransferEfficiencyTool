@@ -89,6 +89,18 @@ def calculate_cache_hit(config):
     )
 
 
+def save_data(config, data, filename, middle=False):
+    if middle:
+        filename = "tmp_{}".format(filename)
+    safe_data_to_file(
+        os.path.join(
+            config.result_data_store,
+            filename,
+        ),
+        data=data,
+    )
+
+
 def deliver_experimentally(config):
     plot_data = []
     for transmitter_name in config.cas_transmitters:
@@ -107,6 +119,7 @@ def deliver_experimentally(config):
             versions=config.versions,
             dest_path=config.dest_path.format(transmitter_name),
         )
+        save_data(config, plot_data, "time_comparison.yaml", middle=True)
     for transmitter_name in config.other_transmitters:
         transmitter_class = const.OTHER_TRANSMITTERS[transmitter_name]
         plot_data += transfer_without_cache(
@@ -123,13 +136,7 @@ def deliver_experimentally(config):
         xlabel="Version",
         ylabel="Time",
     )
-    safe_data_to_file(
-        os.path.join(
-            config.result_data_store,
-            "time_comparison.yaml",
-        ),
-        data=plot_data,
-    )
+    save_data(config, plot_data, "time_comparison.yaml")
 
 
 def main():
@@ -138,7 +145,7 @@ def main():
     if not args.only_deliver:
         preprocess(config)
     if not args.only_chunking:
-        calculate_cache_hit(config)
+        # calculate_cache_hit(config)
         deliver_experimentally(config)
 
 
