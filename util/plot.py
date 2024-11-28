@@ -20,6 +20,7 @@ def make_plot(
     plot_file: str | None = None,
     xlabel="Version",
     ylabel="Time",
+    verbose=False,
 ):
     figure = plt.figure(figsize=(WINDOW_WIDTH / SCREEN_DPI, WINDOW_HEIGHT / SCREEN_DPI))
 
@@ -45,5 +46,6 @@ def make_plot(
             plot_file,
             dpi=SCREEN_DPI,
         )
-    figure.show()
-    plt.show()
+    if verbose:
+        figure.show()
+        plt.show()

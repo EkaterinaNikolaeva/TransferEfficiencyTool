@@ -19,6 +19,8 @@ def parse_args():
     parser.add_argument("--config-file", required=True)
     parser.add_argument("--only-chunking", action="store_true")
     parser.add_argument("--only-deliver", action="store_true")
+    parser.add_argument("--only-cache-hit", action="store_true")
+    parser.add_argument("-v", "--verbose", action="store_true")
 
     return parser.parse_args()
 
@@ -41,7 +43,7 @@ def preprocess(config):
         )
 
 
-def calculate_cache_hit(config):
+def calculate_cache_hit(config, verbose):
     average_cache_hits_by_transmitter = []
     for transmitter_name in config.cas_transmitters:
         cache_hits = calculate_cache_hit_by_indexes(
@@ -79,6 +81,7 @@ def calculate_cache_hit(config):
         ),
         xlabel="Chunk sizes",
         ylabel="Cache hit",
+        verbose=verbose,
     )
     safe_data_to_file(
         os.path.join(
@@ -101,9 +104,12 @@ def save_data(config, data, filename, middle=False):
     )
 
 
-def deliver_experimentally(config):
+def deliver_experimentally(config, verbose):
     plot_data = []
     for transmitter_name in config.cas_transmitters:
+        os.makedirs(
+            os.path.dirname(config.dest_path.format(transmitter_name)), exist_ok=True
+        )
         transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
         plot_data += transfer_using_cas_all_chunks(
             transmitter_name=transmitter_name,
@@ -135,6 +141,7 @@ def deliver_experimentally(config):
         plot_file=os.path.join(config.result_plot_store, "time_comparison.png"),
         xlabel="Version",
         ylabel="Time",
+        verbose=verbose,
     )
     save_data(config, plot_data, "time_comparison.yaml")
 
@@ -145,8 +152,9 @@ def main():
     if not args.only_deliver:
         preprocess(config)
     if not args.only_chunking:
-        # calculate_cache_hit(config)
-        deliver_experimentally(config)
+        calculate_cache_hit(config, args.verbose)
+        if not args.only_cache_hit:
+            deliver_experimentally(config, args.verbose)
 
 
 if __name__ == "__main__":
