@@ -11,12 +11,16 @@ from util.plot import make_plot, Subplot
 from util.dump_data import safe_data_to_file
 import argparse
 import os
+import libs.target_function as target_functions
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--config-file", required=True)
+    parser.add_argument(
+        "--target", choices=[const.TRAFFIC, const.TIME], default=const.TIME
+    )
     parser.add_argument("--only-chunking", action="store_true")
     parser.add_argument("--only-deliver", action="store_true")
     parser.add_argument("--only-cache-hit", action="store_true")
@@ -104,7 +108,14 @@ def save_data(config, data, filename, middle=False):
     )
 
 
-def deliver_experimentally(config, verbose):
+def get_target_function(target, transmitter_params):
+    if target == const.TIME:
+        return target_functions.time.Time()
+    elif target == const.TRAFFIC:
+        return target_functions.traffic.Traffic(transmitter_params.port, "lo")
+
+
+def deliver_experimentally(config, target, verbose):
     plot_data = []
     for transmitter_name in config.cas_transmitters:
         os.makedirs(
@@ -114,6 +125,9 @@ def deliver_experimentally(config, verbose):
         plot_data += transfer_using_cas_all_chunks(
             transmitter_name=transmitter_name,
             transmitter_class=transmitter_class,
+            target_function=get_target_function(
+                target, config.cas_transmitters[transmitter_name]
+            ),
             chunk_sizes=config.cas_config.chunk_sizes,
             remote_store=os.path.join(
                 config.cas_config.remote_storage[transmitter_name], transmitter_name
@@ -131,19 +145,24 @@ def deliver_experimentally(config, verbose):
         plot_data += transfer_without_cache(
             transmitter_name=transmitter_name,
             transmitter_class=transmitter_class,
+            target_function=get_target_function(
+                target, config.other_transmitters[transmitter_name]
+            ),
             versions=config.versions,
             dest_path=config.dest_path.format(transmitter_name),
         )
     make_plot(
-        "Time comparison of different transmitters",
+        "{} comparison of different transmitters".format(target),
         [version.name for version in config.versions],
         plot_data,
-        plot_file=os.path.join(config.result_plot_store, "time_comparison.png"),
+        plot_file=os.path.join(
+            config.result_plot_store, "{}_comparison.png".format(target)
+        ),
         xlabel="Version",
-        ylabel="Time",
+        ylabel=target,
         verbose=verbose,
     )
-    save_data(config, plot_data, "time_comparison.yaml")
+    save_data(config, plot_data, "{}_comparison.yaml".format(target))
 
 
 def main():
@@ -152,9 +171,9 @@ def main():
     if not args.only_deliver:
         preprocess(config)
     if not args.only_chunking:
-        calculate_cache_hit(config, args.verbose)
+        # calculate_cache_hit(config, args.verbose)
         if not args.only_cache_hit:
-            deliver_experimentally(config, args.verbose)
+            deliver_experimentally(config, args.target, args.verbose)
 
 
 if __name__ == "__main__":

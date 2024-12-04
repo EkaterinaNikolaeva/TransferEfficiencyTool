@@ -2,25 +2,24 @@ from util.index_name import validate_index_name
 from util.plot import Subplot
 from util.join_dirs import join_dirs
 
-import time
 import os.path
 
 
-def transfer_using_cas(transmitter, index_dir, dest_path, versions):
+def transfer_using_cas(transmitter, target_function, index_dir, dest_path, versions):
     y_data = []
     for version in versions:
         index_file_name = validate_index_name(version.name, version.src_path["local"])
         path_index_file = os.path.join(index_dir, index_file_name)
-        start = time.time()
+        target_function.start()
         transmitter.deliver(dest_path, path_index_file)
-        end = time.time()
-        y_data.append(end - start)
+        y_data.append(target_function.finish())
     return y_data
 
 
 def transfer_using_cas_all_chunks(
     transmitter_name,
     transmitter_class,
+    target_function,
     chunk_sizes,
     remote_store,
     local_cache_dir,
@@ -37,6 +36,7 @@ def transfer_using_cas_all_chunks(
         index_dir = join_dirs(index_store, str(chunk_size))
         y_data = transfer_using_cas(
             transmitter=transmitter,
+            target_function=target_function,
             index_dir=index_dir,
             dest_path=dest_path,
             versions=versions,
@@ -45,12 +45,13 @@ def transfer_using_cas_all_chunks(
     return results
 
 
-def transfer_without_cache(transmitter_name, transmitter_class, versions, dest_path):
+def transfer_without_cache(
+    transmitter_name, transmitter_class, target_function, versions, dest_path
+):
     transmitter = transmitter_class()
     y_data = []
     for version in versions:
-        start = time.time()
+        target_function.start()
         transmitter.deliver(version.src_path[transmitter_name], dest_path)
-        end = time.time()
-        y_data.append(end - start)
+        y_data.append(target_function.finish())
     return [Subplot(transmitter_name, y_data)]
