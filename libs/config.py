@@ -11,6 +11,11 @@ class Version:
 
 
 @dataclass(frozen=True)
+class TransmitterParams:
+    port: int
+
+
+@dataclass(frozen=True)
 class CasDeliverConfig:
     local_cache_store: str
     index_storage: str
@@ -24,8 +29,8 @@ class Config:
     name: str
     cas_config: CasDeliverConfig
     versions: List[Version]
-    cas_transmitters: List[str]
-    other_transmitters: List[str]
+    cas_transmitters: Dict[str, TransmitterParams]
+    other_transmitters: Dict[str, TransmitterParams]
     dest_path: str
     result_data_store: str
     result_plot_store: str

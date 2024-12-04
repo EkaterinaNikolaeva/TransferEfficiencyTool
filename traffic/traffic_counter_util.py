@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from scapy.all import sniff
 import signal
 import sys
