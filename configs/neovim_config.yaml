@@ -41,10 +41,13 @@ versions:
       local: '/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/neovim/nvim-9-5'
 cas_transmitters:
-  - casync
-  - desync
+  desync:
+    port: 8000
+  casync:
+    port: 8000
 other_transmitters:
-  - rsync
+  rsync:
+    port: 22
 result_data_store: '/home/kate/TransferEfficiencyTool/measurements/neovim/'
 result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/neovim/'
 dest_path: '/home/kate/results/neovim/{}'

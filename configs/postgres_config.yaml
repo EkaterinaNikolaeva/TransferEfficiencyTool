@@ -65,10 +65,13 @@ versions:
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
 cas_transmitters:
-  - casync
-  - desync
+  desync:
+    port: 8000
+  casync:
+    port: 8000
 other_transmitters:
-  - rsync
+  rsync:
+    port: 22
 result_data_store: '/home/kate/TransferEfficiencyTool/measurements/postgres/'
 result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/postgres/'
 dest_path: '/home/kate/TransferEfficiencyTool/results/postgres/{}.tar'

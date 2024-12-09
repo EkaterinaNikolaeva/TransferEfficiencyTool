@@ -49,10 +49,13 @@ versions:
       local: '/home/kate/TransferEfficiencyTool/test_data/models/model_90.pth'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/models/model_90.pth'
 cas_transmitters:
-  - casync
-  - desync
+  desync:
+    port: 8000
+  casync:
+    port: 8000
 other_transmitters:
-  - rsync
+  rsync:
+    port: 22
 result_data_store: '/home/kate/TransferEfficiencyTool/measurements/models/'
 result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/models/'
 dest_path: '/home/kate/results/models/{}'

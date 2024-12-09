@@ -1,0 +1,10 @@
+- !!python/object:util.plot.Subplot
+  data:
+  - 77.69169235229492
+  - 29.11515235900879
+  name: desync-512
+- !!python/object:util.plot.Subplot
+  data:
+  - 78.89832067489624
+  - 30.638946533203125
+  name: casync-512
