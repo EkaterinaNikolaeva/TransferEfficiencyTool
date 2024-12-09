@@ -41,10 +41,13 @@ versions:
       local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-8.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-8.tar'
 cas_transmitters:
-  - desync
-  - casync
+  desync:
+    port: 8000
+  casync:
+    port: 8000
 other_transmitters:
-  - rsync
+  rsync:
+    port: 22
 result_data_store: '/home/kate/TransferEfficiencyTool/measurements/debian/'
 result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/debian/'
 dest_path: '/home/kate/TransferEfficiencyTool/results/debian/{}.tar'

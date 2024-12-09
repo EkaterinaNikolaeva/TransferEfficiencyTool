@@ -2,7 +2,7 @@ name: ClickHouse
 cas_config:
   local_cache_store: '/home/kate/TransferEfficiencyTool/local_cache/clickhouse/'
   remote_storage:
-    casync: 'localhost:/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
+    casync: 'http://127.0.0.1:8000/'
     desync: 'http://127.0.0.1:8000/'
   index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
   local_version_of_remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
@@ -64,11 +64,13 @@ versions:
       rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-nov/'
       wget: 'http://localhost:8000/src/ClickHouse-nov.tar'
 cas_transmitters:
-  - casync
-  - desync
+  desync:
+    port: 8000
+  casync:
+    port: 8000
 other_transmitters:
-  - wget
-  - rsync
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_wget/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_wget/'
+  rsync:
+    port: 22
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_traffic/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_traffic/'
 dest_path: '/home/kate/results/clickhouse/{}'
