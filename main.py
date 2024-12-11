@@ -171,7 +171,7 @@ def main():
     if not args.only_deliver:
         preprocess(config)
     if not args.only_chunking:
-        # calculate_cache_hit(config, args.verbose)
+        calculate_cache_hit(config, args.verbose)
         if not args.only_cache_hit:
             deliver_experimentally(config, args.target, args.verbose)
 
