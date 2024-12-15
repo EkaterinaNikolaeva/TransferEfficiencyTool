@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -8,3 +9,4 @@ class NetworkConditions:
     distribution_type: str
     loss: float  # in %
     bandwidth: int  # in mbit
+    ports: List[int]
