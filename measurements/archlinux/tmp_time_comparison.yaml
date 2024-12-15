@@ -1,0 +1,36 @@
+- !!python/object:util.plot.Subplot
+  data:
+  - 296.48630714416504
+  - 67.78699398040771
+  - 56.6834192276001
+  name: desync-768
+- !!python/object:util.plot.Subplot
+  data:
+  - 294.51682567596436
+  - 73.4997329711914
+  - 60.73194885253906
+  name: desync-1024
+- !!python/object:util.plot.Subplot
+  data:
+  - 293.05026626586914
+  - 91.15904331207275
+  - 75.54907608032227
+  name: desync-1536
+- !!python/object:util.plot.Subplot
+  data:
+  - 289.2674798965454
+  - 101.42142105102539
+  - 92.52803325653076
+  name: desync-2048
+- !!python/object:util.plot.Subplot
+  data:
+  - 287.5159549713135
+  - 107.81750392913818
+  - 99.20358276367188
+  name: desync-3072
+- !!python/object:util.plot.Subplot
+  data:
+  - 286.4235544204712
+  - 123.68450355529785
+  - 116.94149112701416
+  name: desync-4096
