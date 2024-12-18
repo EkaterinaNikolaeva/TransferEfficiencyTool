@@ -1,0 +1,96 @@
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 0.9994631696000613
+  - 0.99977079990832
+  - 0.9992180712423979
+  name: '8'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 0.9995861612315842
+  - 0.9995048687902294
+  - 0.9997199663959676
+  name: '16'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 0.9998149518874907
+  - 0.9996301091178103
+  - 0.99978489997849
+  name: '32'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 0.9996170049789354
+  - 1.0
+  name: '64'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  name: '96'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  name: '128'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  name: '192'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  name: '256'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 0.9972451790633609
+  - 1.0
+  name: '384'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1.0
+  - 1.0
+  - 0.9962264150943397
+  - 1.0
+  - 1.0
+  name: '512'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  name: '1024'
+- !!python/object:util.plot.Subplot
+  data:
+  - 1
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  name: '2048'

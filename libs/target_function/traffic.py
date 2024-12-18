@@ -15,11 +15,9 @@ class Traffic(Target):
         self._process = subprocess.Popen(
             [
                 "sudo",
-                "./traffic/traffic_counter_util.py",
-                "--port",
-                str(self._port),
-                "-i",
+                "./traffic/traffic_counter_util",
                 self._iface,
+                str(self._port),
             ],  # TODO replace it with a deb package!!!
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE,

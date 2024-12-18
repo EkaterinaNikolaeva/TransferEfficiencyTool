@@ -6,7 +6,7 @@ cas_config:
     desync: 'http://127.0.0.1:8000/'
   index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
   local_version_of_remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
-  chunk_sizes: [512]
+  chunk_sizes: [64, 128, 256, 512, 1024, 2048]
 versions:
   - name: 'jan'
     src_path: 
@@ -33,44 +33,44 @@ versions:
       local: '/home/kate/test_data/clickhouse/ClickHouse-may'
       rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-may/'
       wget: 'http://localhost:8000/src/ClickHouse-may.tar'
-  - name: 'jun'
-    src_path:
-      local: '/home/kate/test_data/clickhouse/ClickHouse-jun'
-      rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jun/'
-      wget: 'http://localhost:8000/src/ClickHouse-jun.tar'
-  - name: 'jul'
-    src_path:
-      local: '/home/kate/test_data/clickhouse/ClickHouse-jul'
-      rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jul/'
-      wget: 'http://localhost:8000/src/ClickHouse-jul.tar'
-  - name: 'aug'
-    src_path:
-      local: '/home/kate/test_data/clickhouse/ClickHouse-aug'
-      rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-aug/'
-      wget: 'http://localhost:8000/src/ClickHouse-aug.tar'
-  - name: 'sep'
-    src_path:
-      local: '/home/kate/test_data/clickhouse/ClickHouse-sep'
-      rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-sep/'
-      wget: 'http://localhost:8000/src/ClickHouse-sep.tar'
-  - name: 'oct'
-    src_path:
-      local: '/home/kate/test_data/clickhouse/ClickHouse-oct'
-      rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-oct/'
-      wget: 'http://localhost:8000/src/ClickHouse-oct.tar'
-  - name: 'nov'
-    src_path:
-      local: '/home/kate/test_data/clickhouse/ClickHouse-nov'
-      rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-nov/'
-      wget: 'http://localhost:8000/src/ClickHouse-nov.tar'
+  # - name: 'jun'
+  #   src_path:
+  #     local: '/home/kate/test_data/clickhouse/ClickHouse-jun'
+  #     rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jun/'
+  #     wget: 'http://localhost:8000/src/ClickHouse-jun.tar'
+  # - name: 'jul'
+  #   src_path:
+  #     local: '/home/kate/test_data/clickhouse/ClickHouse-jul'
+  #     rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-jul/'
+  #     wget: 'http://localhost:8000/src/ClickHouse-jul.tar'
+  # - name: 'aug'
+  #   src_path:
+  #     local: '/home/kate/test_data/clickhouse/ClickHouse-aug'
+  #     rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-aug/'
+  #     wget: 'http://localhost:8000/src/ClickHouse-aug.tar'
+  # - name: 'sep'
+  #   src_path:
+  #     local: '/home/kate/test_data/clickhouse/ClickHouse-sep'
+  #     rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-sep/'
+  #     wget: 'http://localhost:8000/src/ClickHouse-sep.tar'
+  # - name: 'oct'
+  #   src_path:
+  #     local: '/home/kate/test_data/clickhouse/ClickHouse-oct'
+  #     rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-oct/'
+  #     wget: 'http://localhost:8000/src/ClickHouse-oct.tar'
+  # - name: 'nov'
+  #   src_path:
+  #     local: '/home/kate/test_data/clickhouse/ClickHouse-nov'
+  #     rsync: 'localhost:/home/kate/test_data/clickhouse/ClickHouse-nov/'
+  #     wget: 'http://localhost:8000/src/ClickHouse-nov.tar'
 cas_transmitters:
   desync:
     port: 8000
-  casync:
-    port: 8000
+  # casync:
+  #   port: 8000
 other_transmitters:
   rsync:
     port: 22
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_traffic/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_traffic/'
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse/'
 dest_path: '/home/kate/results/clickhouse/{}'
