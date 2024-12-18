@@ -1,7 +1,11 @@
 from libs.config import parse_config
 import libs.const as const
 from libs.make_indexes import make_indexes
-from libs.cache_hit import calculate_cache_hit_by_indexes, calculate_average_cache_hit
+from libs.cache_hit import (
+    calculate_cache_hit_by_indexes,
+    calculate_average_cache_hit,
+    calculate_importance_last_version_by_indexes,
+)
 from libs.empirical_delivery import (
     transfer_using_cas_all_chunks,
     transfer_without_cache,
@@ -74,6 +78,18 @@ def calculate_cache_hit(config, verbose):
         )
         average_cache_hits_by_transmitter.append(
             Subplot(name=transmitter_name, data=average_cache_hits)
+        )
+        calculate_importance_last_version_by_indexes(
+            os.path.join(config.cas_config.index_storage, transmitter_name),
+            config.versions,
+            data_file=os.path.join(
+                join_dirs(config.result_data_store, transmitter_name),
+                "importance_latest_version.yaml",
+            ),
+            plot_file=os.path.join(
+                join_dirs(config.result_data_store, transmitter_name),
+                "importance_latest_version.png",
+            ),
         )
     make_plot(
         "Average cache hit",
@@ -171,7 +187,7 @@ def main():
     if not args.only_deliver:
         preprocess(config)
     if not args.only_chunking:
-        # calculate_cache_hit(config, args.verbose)
+        calculate_cache_hit(config, args.verbose)
         if not args.only_cache_hit:
             deliver_experimentally(config, args.target, args.verbose)
 
