@@ -16,6 +16,7 @@ from util.dump_data import safe_data_to_file
 import argparse
 import os
 import libs.target_function as target_functions
+from libs.optimization import optimize_chunk_size
 
 
 def parse_args():
@@ -181,15 +182,32 @@ def deliver_experimentally(config, target, verbose):
     save_data(config, plot_data, "{}_comparison.yaml".format(target))
 
 
+def find_optimal_chunk_size(config, target):
+    optimize_chunk_size(
+        local_src_path=os.path.join(
+            config.cas_config.local_version_of_remote_storage, "desync"
+        ),
+        remote_cache_store=os.path.join(
+            config.cas_config.remote_storage["desync"], "desync"
+        ),
+        local_cache_store=os.path.join(config.cas_config.local_cache_store, "desync"),
+        index_store=os.path.join(config.cas_config.index_storage, "desync"),
+        versions=config.versions,
+        target_function=get_target_function(target, config.cas_transmitters["desync"]),
+        dest_path=config.dest_path.format("desync"),
+    )
+
+
 def main():
     args = parse_args()
     config = parse_config(args.config_file)
-    if not args.only_deliver:
-        preprocess(config)
-    if not args.only_chunking:
-        calculate_cache_hit(config, args.verbose)
-        if not args.only_cache_hit:
-            deliver_experimentally(config, args.target, args.verbose)
+    find_optimal_chunk_size(config, target=args.target)
+    # if not args.only_deliver:
+    #     preprocess(config)
+    # if not args.only_chunking:
+    #     calculate_cache_hit(config, args.verbose)
+    #     if not args.only_cache_hit:
+    #         deliver_experimentally(config, args.target, args.verbose)
 
 
 if __name__ == "__main__":
