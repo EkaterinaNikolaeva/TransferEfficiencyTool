@@ -16,6 +16,30 @@ def transfer_using_cas(transmitter, target_function, index_dir, dest_path, versi
     return y_data
 
 
+def transfer_using_cas_for_chunk_size(
+    chunk_size,
+    transmitter_class,
+    remote_store,
+    local_cache_dir,
+    index_store,
+    target_function,
+    dest_path,
+    versions,
+):
+    transmitter = transmitter_class(
+        join_dirs(remote_store, str(chunk_size)),
+        join_dirs(local_cache_dir, str(chunk_size)),
+    )
+    index_dir = join_dirs(index_store, str(chunk_size))
+    return transfer_using_cas(
+        transmitter=transmitter,
+        target_function=target_function,
+        index_dir=index_dir,
+        dest_path=dest_path,
+        versions=versions,
+    )
+
+
 def transfer_using_cas_all_chunks(
     transmitter_name,
     transmitter_class,
@@ -34,12 +58,15 @@ def transfer_using_cas_all_chunks(
             join_dirs(local_cache_dir, str(chunk_size)),
         )
         index_dir = join_dirs(index_store, str(chunk_size))
-        y_data = transfer_using_cas(
-            transmitter=transmitter,
-            target_function=target_function,
-            index_dir=index_dir,
-            dest_path=dest_path,
-            versions=versions,
+        y_data = transfer_using_cas_for_chunk_size(
+            chunk_size,
+            transmitter_class,
+            remote_store,
+            local_cache_dir,
+            index_store,
+            target_function,
+            dest_path,
+            versions,
         )
         results.append(Subplot(name=f"{transmitter_name}-{chunk_size}", data=y_data))
     return results
