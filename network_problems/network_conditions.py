@@ -9,4 +9,4 @@ class NetworkConditions:
     distribution_type: str
     loss: float  # in %
     bandwidth: int  # in mbit
-    ports: List[int]
+    ports: List[int] | None = None
