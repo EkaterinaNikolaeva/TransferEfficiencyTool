@@ -1,4 +1,6 @@
 from bayes_opt import BayesianOptimization
+from bayes_opt.logger import JSONLogger, ScreenLogger
+from bayes_opt.event import Events
 from libs.delivery_systems.desync import Desync
 from libs.make_indexes import make_indexes_for_chunk_size
 from libs.empirical_delivery import transfer_using_cas_for_chunk_size
@@ -44,6 +46,9 @@ def optimize_chunk_size(
     versions,
     target_function,
     dest_path,
+    log_file=None,
+    init_point=5,
+    n_iter=25,
 ):
     pbounds = {"chunk_size": (8, 20000)}
     optimizer = BayesianOptimization(
@@ -60,8 +65,16 @@ def optimize_chunk_size(
         pbounds=pbounds,
         random_state=1,
     )
+
+    if log_file is not None:
+        logger = JSONLogger(path=log_file)
+        optimizer.subscribe(Events.OPTIMIZATION_STEP, logger)
+        screen_logger = ScreenLogger()
+        optimizer.subscribe(Events.OPTIMIZATION_START, screen_logger)
+        optimizer.subscribe(Events.OPTIMIZATION_STEP, screen_logger)
+        optimizer.subscribe(Events.OPTIMIZATION_END, screen_logger)
     optimizer.maximize(
-        init_points=5,
-        n_iter=25,
+        init_points=init_point,
+        n_iter=n_iter,
     )
     print(optimizer.max)
