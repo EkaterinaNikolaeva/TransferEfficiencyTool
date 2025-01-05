@@ -37,6 +37,12 @@ def parse_args():
     return parser.parse_args()
 
 
+def create_dirs(config):
+    os.makedirs(config.result_plot_store, exist_ok=True)
+    os.makedirs(config.result_data_store, exist_ok=True)
+    os.makedirs(os.path.dirname(config.dest_path), exist_ok=True)
+
+
 def preprocess(config, chunk_sizes):
     for transmitter_name in config.cas_transmitters:
         transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
@@ -226,6 +232,7 @@ def find_optimal_chunk_size(config, target, args):
 def main():
     args = parse_args()
     config = parse_config(args.config_file)
+    create_dirs(config)
     if args.optimal:
         chunk_sizes = find_optimal_chunk_size(config, target=args.target, args=args)
     else:
