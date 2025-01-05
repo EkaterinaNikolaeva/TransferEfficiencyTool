@@ -24,10 +24,13 @@ def get_chunk_lists(index_storage_dir, versions):
     return chunks_lists
 
 
-def get_index_dirs(index_storage):
+def get_index_dirs(index_storage, chunk_sizes):
     index_dirs = []
     for file in os.listdir(index_storage):
-        if os.path.isdir(os.path.join(index_storage, file)):
+        if (
+            os.path.isdir(os.path.join(index_storage, file))
+            and int(file) in chunk_sizes
+        ):
             index_dirs.append(int(file))
     index_dirs.sort()
     return index_dirs
@@ -49,10 +52,10 @@ def calculate_cache_hit(index_storage_dir, versions):
 
 
 def calculate_cache_hit_by_indexes(
-    index_storage, versions, data_file=None, plot_file=None
+    chunk_sizes, index_storage, versions, data_file=None, plot_file=None
 ):
     results = []
-    index_dirs = get_index_dirs(index_storage)
+    index_dirs = get_index_dirs(index_storage, chunk_sizes)
     for dir in index_dirs:
         results.append(
             Subplot(
@@ -133,9 +136,9 @@ def calculate_importance_last_version(index_storage_dir, versions):
 
 
 def calculate_importance_last_version_by_indexes(
-    index_storage, versions, data_file=None, plot_file=None
+    chunk_sizes, index_storage, versions, data_file=None, plot_file=None
 ):
-    index_dirs = get_index_dirs(index_storage)
+    index_dirs = get_index_dirs(index_storage, chunk_sizes=chunk_sizes)
     results = []
     for dir in index_dirs:
         results.append(

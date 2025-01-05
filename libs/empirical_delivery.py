@@ -53,11 +53,6 @@ def transfer_using_cas_all_chunks(
 ):
     results = []
     for chunk_size in chunk_sizes:
-        transmitter = transmitter_class(
-            join_dirs(remote_store, str(chunk_size)),
-            join_dirs(local_cache_dir, str(chunk_size)),
-        )
-        index_dir = join_dirs(index_store, str(chunk_size))
         y_data = transfer_using_cas_for_chunk_size(
             chunk_size,
             transmitter_class,
