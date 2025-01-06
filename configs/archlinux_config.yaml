@@ -34,6 +34,6 @@ cas_transmitters:
 other_transmitters:
   rsync:
     port: 22
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/archlinux/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/archlinux/'
-dest_path: '/home/kate/results/archlinux/{}.tar'
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/archlinux_optimal/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/archlinux_optimal/'
+dest_path: '/home/kate/results/archlinux_optimal/{}.tar'

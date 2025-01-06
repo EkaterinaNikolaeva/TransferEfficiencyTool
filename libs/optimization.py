@@ -10,7 +10,7 @@ import shutil
 def try_chunk_size(
     chunk_size,
     transmitter_class,
-    local_src_path,
+    local_version_remote_store,
     remote_cache_store,
     local_cache_store,
     index_store,
@@ -25,7 +25,7 @@ def try_chunk_size(
     make_indexes_for_chunk_size(
         chunk_size,
         transmitter_class,
-        local_src_path,
+        local_version_remote_store,
         local_cache_store,
         index_store,
         versions,
@@ -40,12 +40,14 @@ def try_chunk_size(
         dest_path,
         versions,
     )
+    shutil.rmtree(os.path.join(local_version_remote_store, str(chunk_size)))
+    shutil.rmtree(os.path.join(local_cache_store, str(chunk_size)))
     return -sum(y_data) / len(y_data)
 
 
 def optimize_chunk_size(
     transmitter_class,
-    local_src_path,
+    local_version_remote_store,
     remote_cache_store,
     local_cache_store,
     index_store,
@@ -61,7 +63,7 @@ def optimize_chunk_size(
         f=lambda chunk_size: try_chunk_size(
             chunk_size,
             transmitter_class,
-            local_src_path,
+            local_version_remote_store,
             remote_cache_store,
             local_cache_store,
             index_store,

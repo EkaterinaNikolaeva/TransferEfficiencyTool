@@ -72,6 +72,6 @@ cas_transmitters:
 other_transmitters:
   rsync:
     port: 22
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/postgres/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/postgres/'
-dest_path: '/home/kate/TransferEfficiencyTool/results/postgres/{}.tar'
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/postgres_optimal/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/postgres_optimal/'
+dest_path: '/home/kate/TransferEfficiencyTool/results/postgres_optimal/{}.tar'
