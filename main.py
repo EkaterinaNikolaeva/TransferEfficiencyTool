@@ -16,6 +16,7 @@ from util.dump_data import safe_data_to_file
 import argparse
 import os
 import libs.target_function as target_functions
+from libs.optimization import optimize_chunk_size
 
 
 def parse_args():
@@ -29,16 +30,25 @@ def parse_args():
     parser.add_argument("--only-deliver", action="store_true")
     parser.add_argument("--only-cache-hit", action="store_true")
     parser.add_argument("-v", "--verbose", action="store_true")
+    parser.add_argument("--optimal", action="store_true")
 
+    parser.add_argument("--init-iter", type=int, default=5)
+    parser.add_argument("--n-iter", type=int, default=25)
     return parser.parse_args()
 
 
-def preprocess(config):
+def create_dirs(config):
+    os.makedirs(config.result_plot_store, exist_ok=True)
+    os.makedirs(config.result_data_store, exist_ok=True)
+    os.makedirs(os.path.dirname(config.dest_path), exist_ok=True)
+
+
+def preprocess(config, chunk_sizes):
     for transmitter_name in config.cas_transmitters:
         transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
         make_indexes(
             transmitter_class,
-            chunk_sizes=config.cas_config.chunk_sizes,
+            chunk_sizes=chunk_sizes[transmitter_name],
             remote_store=os.path.join(
                 config.cas_config.local_version_of_remote_storage, transmitter_name
             ),
@@ -51,10 +61,11 @@ def preprocess(config):
         )
 
 
-def calculate_cache_hit(config, verbose):
+def calculate_cache_hit(config, chunk_sizes, verbose, create_average=True):
     average_cache_hits_by_transmitter = []
     for transmitter_name in config.cas_transmitters:
         cache_hits = calculate_cache_hit_by_indexes(
+            chunk_sizes[transmitter_name],
             os.path.join(config.cas_config.index_storage, transmitter_name),
             config.versions,
             data_file=os.path.join(
@@ -66,7 +77,7 @@ def calculate_cache_hit(config, verbose):
         )
         average_cache_hits = calculate_average_cache_hit(
             cache_hits,
-            config.cas_config.chunk_sizes,
+            chunk_sizes[transmitter_name],
             data_file=os.path.join(
                 join_dirs(config.result_data_store, transmitter_name),
                 "average_cache_hit.yaml",
@@ -80,6 +91,7 @@ def calculate_cache_hit(config, verbose):
             Subplot(name=transmitter_name, data=average_cache_hits)
         )
         calculate_importance_last_version_by_indexes(
+            chunk_sizes[transmitter_name],
             os.path.join(config.cas_config.index_storage, transmitter_name),
             config.versions,
             data_file=os.path.join(
@@ -91,25 +103,26 @@ def calculate_cache_hit(config, verbose):
                 "importance_latest_version.png",
             ),
         )
-    make_plot(
-        "Average cache hit",
-        config.cas_config.chunk_sizes,
-        average_cache_hits_by_transmitter,
-        os.path.join(
-            config.result_plot_store,
-            "average_cache_hit.png",
-        ),
-        xlabel="Chunk sizes",
-        ylabel="Cache hit",
-        verbose=verbose,
-    )
-    safe_data_to_file(
-        os.path.join(
-            config.result_data_store,
-            "average_cache_hit.yaml",
-        ),
-        data=average_cache_hits_by_transmitter,
-    )
+    if create_average:
+        make_plot(
+            "Average cache hit",
+            config.cas_config.chunk_sizes,
+            average_cache_hits_by_transmitter,
+            os.path.join(
+                config.result_plot_store,
+                "average_cache_hit.png",
+            ),
+            xlabel="Chunk sizes",
+            ylabel="Cache hit",
+            verbose=verbose,
+        )
+        safe_data_to_file(
+            os.path.join(
+                config.result_data_store,
+                "average_cache_hit.yaml",
+            ),
+            data=average_cache_hits_by_transmitter,
+        )
 
 
 def save_data(config, data, filename, middle=False):
@@ -131,7 +144,7 @@ def get_target_function(target, transmitter_params):
         return target_functions.traffic.Traffic(transmitter_params.port, "lo")
 
 
-def deliver_experimentally(config, target, verbose):
+def deliver_experimentally(config, chunk_sizes, target, verbose):
     plot_data = []
     for transmitter_name in config.cas_transmitters:
         os.makedirs(
@@ -144,7 +157,7 @@ def deliver_experimentally(config, target, verbose):
             target_function=get_target_function(
                 target, config.cas_transmitters[transmitter_name]
             ),
-            chunk_sizes=config.cas_config.chunk_sizes,
+            chunk_sizes=chunk_sizes[transmitter_name],
             remote_store=os.path.join(
                 config.cas_config.remote_storage[transmitter_name], transmitter_name
             ),
@@ -181,15 +194,59 @@ def deliver_experimentally(config, target, verbose):
     save_data(config, plot_data, "{}_comparison.yaml".format(target))
 
 
+def find_optimal_chunk_size(config, target, args):
+    chunk_sizes = dict()
+    for transmitter_name in config.cas_transmitters:
+        transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
+        chunk_sizes[transmitter_name] = [
+            optimize_chunk_size(
+                transmitter_class,
+                local_src_path=os.path.join(
+                    config.cas_config.local_version_of_remote_storage, transmitter_name
+                ),
+                remote_cache_store=os.path.join(
+                    config.cas_config.remote_storage[transmitter_name], transmitter_name
+                ),
+                local_cache_store=os.path.join(
+                    config.cas_config.local_cache_store, transmitter_name
+                ),
+                index_store=os.path.join(
+                    config.cas_config.index_storage, transmitter_name
+                ),
+                versions=config.versions,
+                target_function=get_target_function(
+                    target, config.cas_transmitters[transmitter_name]
+                ),
+                dest_path=config.dest_path.format(transmitter_name),
+                log_file=os.path.join(
+                    join_dirs(config.result_data_store, transmitter_name),
+                    "bayesian_optimization.log",
+                ),
+                init_point=args.init_iter,
+                n_iter=args.n_iter,
+            )
+        ]
+    return chunk_sizes
+
+
 def main():
     args = parse_args()
     config = parse_config(args.config_file)
-    if not args.only_deliver:
-        preprocess(config)
+    create_dirs(config)
+    if args.optimal:
+        chunk_sizes = find_optimal_chunk_size(config, target=args.target, args=args)
+    else:
+        chunk_sizes = {
+            key: config.cas_config.chunk_sizes for key in config.cas_transmitters
+        }
+    if not args.only_deliver and not args.optimal:
+        preprocess(config, chunk_sizes)
     if not args.only_chunking:
-        calculate_cache_hit(config, args.verbose)
+        calculate_cache_hit(
+            config, chunk_sizes, args.verbose, create_average=not args.optimal
+        )
         if not args.only_cache_hit:
-            deliver_experimentally(config, args.target, args.verbose)
+            deliver_experimentally(config, chunk_sizes, args.target, args.verbose)
 
 
 if __name__ == "__main__":
