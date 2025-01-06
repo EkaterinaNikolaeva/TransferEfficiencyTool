@@ -201,7 +201,7 @@ def find_optimal_chunk_size(config, target, args):
         chunk_sizes[transmitter_name] = [
             optimize_chunk_size(
                 transmitter_class,
-                local_src_path=os.path.join(
+                local_version_remote_store=os.path.join(
                     config.cas_config.local_version_of_remote_storage, transmitter_name
                 ),
                 remote_cache_store=os.path.join(
@@ -239,7 +239,7 @@ def main():
         chunk_sizes = {
             key: config.cas_config.chunk_sizes for key in config.cas_transmitters
         }
-    if not args.only_deliver and not args.optimal:
+    if not args.only_deliver:
         preprocess(config, chunk_sizes)
     if not args.only_chunking:
         calculate_cache_hit(

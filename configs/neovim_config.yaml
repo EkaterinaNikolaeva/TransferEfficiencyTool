@@ -43,11 +43,11 @@ versions:
 cas_transmitters:
   desync:
     port: 8000
-  casync:
-    port: 8000
+  # casync:
+  #   port: 8000
 other_transmitters:
   rsync:
     port: 22
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/neovim/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/neovim/'
-dest_path: '/home/kate/results/neovim/{}'
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/neovim_optimal/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/neovim_optimal/'
+dest_path: '/home/kate/results/neovim_optimal/{}'
