@@ -1,6 +1,6 @@
 from libs.config import parse_config
 import libs.const as const
-from libs.make_indexes import make_indexes
+from libs.transmitter_preprocess import make_indexes, preproccess_no_cas_transmitter
 from libs.cache_hit import (
     calculate_cache_hit_by_indexes,
     calculate_average_cache_hit,
@@ -17,6 +17,7 @@ import argparse
 import os
 import libs.target_function as target_functions
 from libs.optimization import optimize_chunk_size
+from libs.delivery_systems.zsync import Zsync
 
 
 def parse_args():
@@ -58,6 +59,13 @@ def preprocess(config, chunk_sizes):
             index_store=os.path.join(config.cas_config.index_storage, transmitter_name),
             version_list=config.versions,
             factor=const.CAS_CHUNK_SIZES_FACTOR[transmitter_name],
+        )
+    if "zsync" in config.other_transmitters:
+        preproccess_no_cas_transmitter(
+            Zsync,
+            sources_list=[
+                version.src_path["zsync_local"] for version in config.versions
+            ],
         )
 
 

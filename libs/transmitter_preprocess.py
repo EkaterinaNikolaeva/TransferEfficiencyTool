@@ -51,3 +51,9 @@ def make_indexes(
             version_list,
             factor,
         )
+
+
+def preproccess_no_cas_transmitter(transmitter_class, sources_list):
+    transmitter = transmitter_class()
+    for source in sources_list:
+        transmitter.preprocess(source)
