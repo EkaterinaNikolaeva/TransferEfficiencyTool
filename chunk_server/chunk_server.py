@@ -1,7 +1,6 @@
-from flask import Flask, request, send_from_directory, jsonify, Response
+from flask import Flask, request, send_from_directory, jsonify
 import os
 import argparse
-from werkzeug.http import parse_range_header
 
 app = Flask(__name__)
 
@@ -22,44 +21,9 @@ def handle_exception(err):
     return jsonify(response), err.status_code
 
 
-def get_range(range_header, file_size):
-    range_parsed = parse_range_header(range_header)
-    if not range_parsed:
-        raise RequestException(416, "Invalid Range header")
-    start, end = range_parsed.ranges[0]
-    if start is None:
-        start = 0
-    if end is None:
-        end = file_size - 1
-    if start < 0 or end >= file_size or start > end:
-        raise RequestException(416, "Bad range")
-    return start, end
-
-
 @app.route("/<path:filename>", methods=["GET"])
 def download_file(filename):
-    range_header = request.headers.get("Range", None)
-    if not range_header:
-        return send_from_directory(STORAGE, filename, as_attachment=True)
-    file = os.path.join(STORAGE, filename)
-    file_size = os.path.getsize(file)
-    start, end = get_range(request.headers["Range"], file_size)
-
-    def generate():
-        with open(file, "rb") as f:
-            f.seek(start)
-            remaining = end - start + 1
-            while remaining > 0:
-                chunk = f.read(min(8192, remaining))
-                if not chunk:
-                    break
-                remaining -= len(chunk)
-                yield chunk
-
-    response = Response(generate(), status=206, mimetype="application/octet-stream")
-    response.headers["Content-Range"] = f"bytes {start}-{end}/{file_size}"
-    response.headers["Accept-Ranges"] = "bytes"
-    return response
+    return send_from_directory(STORAGE, filename, as_attachment=True)
 
 
 @app.route("/<path:filename>", methods=["HEAD"])

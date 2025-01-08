@@ -44,6 +44,13 @@ def create_dirs(config):
     os.makedirs(os.path.dirname(config.dest_path), exist_ok=True)
 
 
+def check_need_for_preprocess(transmitter_name, versions):
+    for version in versions:
+        if f"{transmitter_name}_local" not in version.src_path:
+            return False
+    return True
+
+
 def preprocess(config, chunk_sizes):
     for transmitter_name in config.cas_transmitters:
         transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
@@ -60,13 +67,16 @@ def preprocess(config, chunk_sizes):
             version_list=config.versions,
             factor=const.CAS_CHUNK_SIZES_FACTOR[transmitter_name],
         )
-    if "zsync" in config.other_transmitters:
-        preproccess_no_cas_transmitter(
-            Zsync,
-            sources_list=[
-                version.src_path["zsync_local"] for version in config.versions
-            ],
-        )
+    for transmitter_name in config.other_transmitters:
+        if check_need_for_preprocess(transmitter_name, config.versions):
+            transmitter_class = const.OTHER_TRANSMITTERS[transmitter_name]
+            preproccess_no_cas_transmitter(
+                transmitter_name,
+                sources_list=[
+                    version.src_path[f"{transmitter_name}_local"]
+                    for version in config.versions
+                ],
+            )
 
 
 def calculate_cache_hit(config, chunk_sizes, verbose, create_average=True):
