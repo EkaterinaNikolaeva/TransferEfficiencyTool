@@ -7,10 +7,10 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def run(command: List[str]):
+def run(command: List[str], cwd=None):
     logger.info(" ".join(command))
     try:
-        output = subprocess.check_output(command)
+        output = subprocess.check_output(command, cwd=cwd)
     except subprocess.CalledProcessError as e:
         logger.error("Return code: {}".format(e.returncode))
         exit(e.returncode)
