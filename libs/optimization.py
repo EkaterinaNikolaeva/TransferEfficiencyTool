@@ -1,7 +1,7 @@
 from bayes_opt import BayesianOptimization
 from bayes_opt.logger import JSONLogger, ScreenLogger
 from bayes_opt.event import Events
-from libs.make_indexes import make_indexes_for_chunk_size
+from libs.transmitter_preprocess import make_indexes_for_chunk_size
 from libs.empirical_delivery import transfer_using_cas_for_chunk_size
 import os
 import shutil

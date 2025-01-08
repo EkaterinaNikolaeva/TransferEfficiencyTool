@@ -1,10 +1,8 @@
+from libs.delivery_systems.no_cas_transmitter import NoCasTransmitter
 from util.exec import run
-from util.index_name import validate_index_name, IncorrectIndexFileName
-from typing import List
-import os
 
 
-class Wget:
+class Wget(NoCasTransmitter):
     def deliver(self, source, output):
         run(
             [

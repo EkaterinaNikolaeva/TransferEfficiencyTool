@@ -1,6 +1,6 @@
 from libs.config import parse_config
 import libs.const as const
-from libs.make_indexes import make_indexes
+from libs.transmitter_preprocess import make_indexes, preproccess_no_cas_transmitter
 from libs.cache_hit import (
     calculate_cache_hit_by_indexes,
     calculate_average_cache_hit,
@@ -17,6 +17,7 @@ import argparse
 import os
 import libs.target_function as target_functions
 from libs.optimization import optimize_chunk_size
+from libs.delivery_systems.zsync import Zsync
 
 
 def parse_args():
@@ -43,6 +44,13 @@ def create_dirs(config):
     os.makedirs(os.path.dirname(config.dest_path), exist_ok=True)
 
 
+def check_need_for_preprocess(transmitter_name, versions):
+    for version in versions:
+        if f"{transmitter_name}_local" not in version.src_path:
+            return False
+    return True
+
+
 def preprocess(config, chunk_sizes):
     for transmitter_name in config.cas_transmitters:
         transmitter_class = const.CAS_TRANSMITTERS[transmitter_name]
@@ -59,6 +67,16 @@ def preprocess(config, chunk_sizes):
             version_list=config.versions,
             factor=const.CAS_CHUNK_SIZES_FACTOR[transmitter_name],
         )
+    for transmitter_name in config.other_transmitters:
+        if check_need_for_preprocess(transmitter_name, config.versions):
+            transmitter_class = const.OTHER_TRANSMITTERS[transmitter_name]
+            preproccess_no_cas_transmitter(
+                transmitter_name,
+                sources_list=[
+                    version.src_path[f"{transmitter_name}_local"]
+                    for version in config.versions
+                ],
+            )
 
 
 def calculate_cache_hit(config, chunk_sizes, verbose, create_average=True):
