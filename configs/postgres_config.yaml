@@ -12,58 +12,86 @@ versions:
     src_path: 
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-0.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-0.tar'
+      zsync: 'http://localhost:8080/postgres/postgres-14-0.tar.zsync'
+      zsync_local: '/var/www/remote_storage/postgres/postgres-14-0.tar'
   - name: '14-1'
     src_path: 
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-1.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-1.tar'
+      zsync: 'http://localhost:8080/postgres/postgres-14-1.tar.zsync'
+      zsync_local: '/var/www/remote_storage/postgres/postgres-14-1.tar'
   - name: '14-2'
     src_path: 
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-2.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-2.tar'
+      zsync: 'http://localhost:8080/postgres/postgres-14-2.tar.zsync'
+      zsync_local: '/var/www/remote_storage/postgres/postgres-14-2.tar'
   - name: '14-3'
     src_path: 
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-3.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-3.tar'
+      zsync: 'http://localhost:8080/postgres/postgres-14-3.tar.zsync'
+      zsync_local: '/var/www/remote_storage/postgres/postgres-14-3.tar'
   - name: '14-4'
     src_path: 
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-4.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-4.tar'
+      zsync: 'http://localhost:8080/postgres/postgres-14-4.tar.zsync'
+      zsync_local: '/var/www/remote_storage/postgres/postgres-14-4.tar'
   - name: '14-5'
     src_path: 
       local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-5.tar'
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-5.tar'
-  - name: '14-6'
-    src_path: 
-      local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar'
-      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar'
+      zsync: 'http://localhost:8080/postgres/postgres-14-5.tar.zsync'
+      zsync_local: '/var/www/remote_storage/postgres/postgres-14-5.tar'
+  # - name: '14-6'
+  #   src_path: 
+  #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar'
+  #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-6.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-6.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-6.tar'
   # - name: '14-7'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-7.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-7.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-7.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-7.tar'
   # - name: '14-8'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-8.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-8.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-8.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-8.tar'
   # - name: '14-9'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-9.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-9.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-9.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-9.tar'
   # - name: '14-10'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-10.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-10.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-10.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-10.tar'
   # - name: '14-11'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-11.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-11.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-11.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-11.tar'
   # - name: '14-12'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-12.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-12.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-12.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-12.tar'
   # - name: '14-13'
   #   src_path: 
   #     local: '/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
   #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/postgres/postgres-14-13.tar'
+  #     zsync: 'http://localhost:8080/postgres/postgres-14-13.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/postgres/postgres-14-13.tar'
 cas_transmitters:
   desync:
     port: 8000
@@ -72,6 +100,8 @@ cas_transmitters:
 other_transmitters:
   rsync:
     port: 22
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/postgres/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/postgres/'
+  zsync:
+    port: 8080
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/postgres_zsync/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/postgres_zsync/'
 dest_path: '/home/kate/TransferEfficiencyTool/results/postgres/{}.tar'
