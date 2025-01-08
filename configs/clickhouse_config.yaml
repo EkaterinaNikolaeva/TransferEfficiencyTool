@@ -6,7 +6,7 @@ cas_config:
     desync: 'http://127.0.0.1:8000/'
   index_storage: '/home/kate/TransferEfficiencyTool/index/clickhouse/'
   local_version_of_remote_storage: '/home/kate/TransferEfficiencyTool/remote_storage/clickhouse/'
-  chunk_sizes: [64, 128, 256, 512, 1024, 2048]
+  chunk_sizes: [64, 256, 512, 2048]
 versions:
   - name: 'jan'
     src_path: 
@@ -71,6 +71,6 @@ cas_transmitters:
 other_transmitters:
   rsync:
     port: 22
-result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse/'
-result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse/'
-dest_path: '/home/kate/results/clickhouse/{}'
+result_data_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_optimal_wifi/'
+result_plot_store: '/home/kate/TransferEfficiencyTool/measurements/clickhouse_optimal_wifi/'
+dest_path: '/home/kate/results/clickhouse_optimal_wifi/{}'
