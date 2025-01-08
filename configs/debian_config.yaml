@@ -38,25 +38,27 @@ versions:
       rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-5.tar'
       zsync: 'http://localhost:8080/debian/debian-12-5.tar.zsync'
       zsync_local: '/var/www/remote_storage/debian/debian-12-5.tar'
-  - name: '12-6'
-    src_path: 
-      local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-6.tar'
-      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-6.tar'
-      zsync: 'http://localhost:8080/debian/debian-12-6.tar.zsync'
-      zsync_local: '/var/www/remote_storage/debian/debian-12-6.tar'
-  - name: '12-7'
-    src_path: 
-      local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-7.tar'
-      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-7.tar'
-      zsync: 'http://localhost:8080/debian/debian-12-7.tar.zsync'
-      zsync_local: '/var/www/remote_storage/debian/debian-12-7.tar'
-  - name: '12-8'
-    src_path: 
-      local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-8.tar'
-      rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-8.tar'
-      zsync: 'http://localhost:8080/debian/debian-12-8.tar.zsync'
-      zsync_local: '/var/www/remote_storage/debian/debian-12-8.tar'
-cas_transmitters: {}
+  # - name: '12-6'
+  #   src_path: 
+  #     local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-6.tar'
+  #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-6.tar'
+  #     zsync: 'http://localhost:8080/debian/debian-12-6.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/debian/debian-12-6.tar'
+  # - name: '12-7'
+  #   src_path: 
+  #     local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-7.tar'
+  #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-7.tar'
+  #     zsync: 'http://localhost:8080/debian/debian-12-7.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/debian/debian-12-7.tar'
+  # - name: '12-8'
+  #   src_path: 
+  #     local: '/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-8.tar'
+  #     rsync: 'localhost:/home/kate/TransferEfficiencyTool/test_data/debian/debian-12-8.tar'
+  #     zsync: 'http://localhost:8080/debian/debian-12-8.tar.zsync'
+  #     zsync_local: '/var/www/remote_storage/debian/debian-12-8.tar'
+cas_transmitters:
+  desync:
+    port: 8000
 other_transmitters:
   rsync:
     port: 22
