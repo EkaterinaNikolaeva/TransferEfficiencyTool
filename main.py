@@ -71,7 +71,7 @@ def preprocess(config, chunk_sizes):
         if check_need_for_preprocess(transmitter_name, config.versions):
             transmitter_class = const.OTHER_TRANSMITTERS[transmitter_name]
             preproccess_no_cas_transmitter(
-                transmitter_name,
+                transmitter_class,
                 sources_list=[
                     version.src_path[f"{transmitter_name}_local"]
                     for version in config.versions

@@ -2,9 +2,7 @@ import matplotlib.pyplot as plt
 from typing import Dict, List
 from dataclasses import dataclass
 
-SCREEN_DPI = 128
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 400
+SCREEN_DPI = 300
 
 
 @dataclass
@@ -22,13 +20,12 @@ def make_plot(
     ylabel="Time",
     verbose=False,
 ):
-    figure = plt.figure(figsize=(WINDOW_WIDTH / SCREEN_DPI, WINDOW_HEIGHT / SCREEN_DPI))
+    figure = plt.figure(figsize=(16, 8))
 
     axes = figure.add_axes((0.1, 0.15, 0.8, 0.7))
     axes.spines[["top", "bottom", "left", "right"]].set_visible(True)
     axes.grid(which="minor", alpha=0.35)
     axes.grid(which="major", alpha=0.7)
-
     axes.set_xlabel(xlabel)
     axes.set_ylabel(ylabel)
 
